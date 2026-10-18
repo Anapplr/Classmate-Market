@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>同窗集市 · 校内可信闲置交易</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#f3f4f6;--card:#fff;--ink:#1b1c20;--sub:#84898f;--faint:#b3b8bf;
+--vio:#8b7bb8;--vio2:#6f5fa0;--grn:#7d9b6d;--grn2:#5f8a6d;
+--peach:#d97b5f;--price:#d95f3b;--red:#e05a4e;
+--line:#eef0f2;--paper:#f6f4ee;
+--a1:#5b8fb9;--a2:#e2cd6e;--a3:#57b8d8;--a4:#d86a6a;--a5:#bec4cd;
+--k:1;
+}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue","Microsoft YaHei",sans-serif;
+-webkit-font-smoothing:antialiased;overflow:hidden;
+background-color:#f4f1ea;
+background-image:
+radial-gradient(52% 44% at 88% 8%,rgba(160,140,200,.20),transparent 70%),
+radial-gradient(46% 40% at 8% 10%,rgba(184,201,163,.22),transparent 70%),
+radial-gradient(48% 42% at 92% 88%,rgba(196,170,214,.18),transparent 70%),
+radial-gradient(50% 44% at 6% 90%,rgba(157,184,138,.22),transparent 70%),
+linear-gradient(160deg,#f6f3ec,#efece4)}
+body.wp-mist{--a1:#8b7bb8;--a2:#c9b6e2;--a3:#a78fd0;--a4:#d0a0c0;--a5:#b9a8d4;
+background-color:#f2eef3;background-image:
+radial-gradient(50% 42% at 88% 10%,rgba(139,123,184,.24),transparent 70%),
+radial-gradient(44% 40% at 8% 88%,rgba(214,170,196,.22),transparent 70%),
+linear-gradient(160deg,#f4f0f5,#ece6ef)}
+body.wp-matcha{--a1:#7d9b6d;--a2:#b9cf9f;--a3:#9db88a;--a4:#d6ce96;--a5:#a8bd94;
+background-color:#f0f2e8;background-image:
+radial-gradient(50% 42% at 86% 10%,rgba(157,184,138,.26),transparent 70%),
+radial-gradient(44% 40% at 10% 88%,rgba(214,206,150,.22),transparent 70%),
+linear-gradient(160deg,#f3f5ea,#eaeee0)}
+body.wp-dawn{--a1:#e8a87c;--a2:#f2c9a8;--a3:#e2a0a0;--a4:#d97b5f;--a5:#eec3b0;
+background-color:#f6efea;background-image:
+radial-gradient(50% 42% at 88% 10%,rgba(232,168,124,.24),transparent 70%),
+radial-gradient(44% 40% at 8% 86%,rgba(226,150,150,.2),transparent 70%),
+linear-gradient(160deg,#f7f1eb,#f0e7de)}
+body.wp-celadon{--a1:#7aa8a0;--a2:#a8ccc4;--a3:#8fb8ac;--a4:#7d9bb4;--a5:#bcd6ce;
+background-color:#eaf1ef;background-image:
+radial-gradient(50% 42% at 86% 10%,rgba(122,168,160,.24),transparent 70%),
+radial-gradient(44% 40% at 10% 88%,rgba(125,155,180,.2),transparent 70%),
+linear-gradient(160deg,#edf3f1,#e2ebe7)}
+body.wp-silver{--a1:#aab4c0;--a2:#dfe3e8;--a3:#c3cad2;--a4:#b0887a;--a5:#d5dae0;
+background-color:#eff1f3;background-image:
+radial-gradient(50% 42% at 88% 10%,rgba(170,180,192,.28),transparent 70%),
+radial-gradient(44% 40% at 8% 88%,rgba(190,196,205,.24),transparent 70%),
+linear-gradient(160deg,#f1f3f5,#e6e9ed)}
+b{font-weight:700}
+/* ===== 等比缩放舞台 ===== */
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.phone{width:392px;height:848px;flex:0 0 auto;position:relative;border-radius:46px;background:#17171a;padding:10px;
+transform:scale(var(--k));transform-origin:center center;
+box-shadow:26px 40px 80px rgba(96,84,70,.34),52px 78px 150px rgba(120,104,88,.24),8px 14px 30px rgba(60,52,44,.22),
+inset 0 1px 1px rgba(255,255,255,.22),inset 0 -1px 2px rgba(0,0,0,.6)}
+.phone::before{content:"";position:absolute;inset:0;border-radius:46px;pointer-events:none;z-index:5;
+background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.10) 7%,transparent 16%,transparent 88%,rgba(255,255,255,.07) 100%)}
+.sidebtn{position:absolute;background:linear-gradient(180deg,#2c2c31,#1a1a1e);border-radius:3px;box-shadow:1px 1px 2px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2);z-index:1}
+.sb-mute{left:-5px;top:128px;width:4px;height:28px}
+.sb-v1{left:-5px;top:182px;width:4px;height:54px}
+.sb-v2{left:-5px;top:246px;width:4px;height:54px}
+.sb-pw{right:-5px;top:204px;width:4px;height:86px}
+.app{width:100%;height:100%;border-radius:37px;background:var(--bg);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:112px;height:32px;background:#000;border-radius:20px;z-index:110;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+.island::after{content:"";width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#24343a,#0a0d0f 70%)}
+.statusbar{position:absolute;top:0;left:0;right:0;height:52px;z-index:20;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 6px;font-size:15px;font-weight:700;color:var(--ink);pointer-events:none}
+.hb{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:124px;height:5px;border-radius:5px;background:rgba(0,0,0,.26);z-index:100;pointer-events:none}
+/* ===== 视图 ===== */
+.views{flex:1;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.view.on{display:flex}
+.view.anim-r{animation:inR .36s cubic-bezier(.3,.75,.3,1)}
+.view.anim-l{animation:inL .36s cubic-bezier(.3,.75,.3,1)}
+.view.anim-u{animation:inU .4s cubic-bezier(.3,.75,.3,1)}
+@keyframes inR{from{opacity:0;transform:translateX(34px)}}
+@keyframes inL{from{opacity:0;transform:translateX(-34px)}}
+@keyframes inU{from{opacity:0;transform:translateY(30px)}}
+.sc{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none;position:relative;z-index:1}
+.sc::-webkit-scrollbar{display:none}
+.sub{position:absolute;inset:0;z-index:40;background:var(--bg);transform:translateX(103%);visibility:hidden;transition:transform .36s cubic-bezier(.32,.72,.28,1),visibility .36s;display:flex;flex-direction:column;box-shadow:-16px 0 36px rgba(40,36,30,.12)}
+.sub.upmv{transform:translateY(103%);box-shadow:0 -16px 40px rgba(40,36,30,.16)}
+.sub.open{transform:none;visibility:visible}
+/* ===== 艺术背景 ===== */
+.artbg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.85}
+.art-swirl{position:absolute;inset:-14%;
+background:
+repeating-radial-gradient(circle at 62% 44%,rgba(255,255,255,.15) 0 24px,rgba(96,124,156,.13) 24px 31px),
+conic-gradient(from 205deg at 60% 42%,var(--a1),var(--a2) 13%,var(--a3) 25%,var(--a4) 37%,var(--a5) 52%,var(--a2) 66%,var(--a1) 82%,var(--a1));
+filter:blur(11px) saturate(.5) brightness(1.12)}
+.art-grain{position:absolute;inset:0;opacity:.2;mix-blend-mode:multiply;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>")}
+.art-veil{position:absolute;inset:0;background:linear-gradient(168deg,rgba(238,240,243,.7),rgba(208,213,220,.48) 45%,rgba(224,228,233,.64) 80%,rgba(212,216,222,.58))}
+/* ===== Tab ===== */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:62px;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);display:flex;align-items:flex-start;justify-content:space-around;padding-top:9px;border-top:1px solid rgba(0,0,0,.05)}
+.tabbar b{font-size:15px;font-weight:600;color:#9aa0a8;cursor:pointer;position:relative;transition:color .2s;letter-spacing:1px}
+.tabbar b.on{color:var(--ink);font-weight:800}
+.tabbar b:active{opacity:.55}
+.tabbar .rd{position:absolute;top:-3px;right:-12px;width:8px;height:8px;border-radius:50%;background:var(--red);border:1.5px solid #fff}
+/* ===== 迷你交易条 ===== */
+.mini{position:absolute;left:12px;right:12px;bottom:70px;height:52px;z-index:30;background:#fff;border:1.5px solid var(--ink);border-radius:15px;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85);display:flex;align-items:center;gap:11px;padding:0 13px 0 7px;cursor:pointer}
+.mini:active{transform:translate(1px,1px);box-shadow:1.5px 1.5px 0 rgba(34,35,40,.85)}
+.mini.gone{display:none}
+.mini .art{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 auto;border:1.5px solid var(--ink)}
+.mini .mt{flex:1;min-width:0;font-size:11px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini .mt b{color:var(--ink);font-weight:700;font-size:13px;display:block}
+.mini .chev{color:var(--faint);font-size:18px;flex:0 0 auto}
+.mini .cls{width:26px;height:26px;border-radius:50%;border:1.4px solid var(--ink);background:#fff;color:var(--ink);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .2s;font-family:inherit;padding:0}
+.mini .cls:active{transform:scale(.85);background:#f1f3f5}
+/* ===== 首页头（固定） ===== */
+.hhead{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:58px 16px 10px;position:relative;z-index:2}
+.burger{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;position:relative;flex:0 0 auto}
+.burger:active{opacity:.55}
+.burger .bdg{position:absolute;top:0;right:-4px;min-width:17px;height:17px;border-radius:9px;background:var(--red);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 4px;font-style:normal}
+.sbar{flex:1;height:38px;border-radius:999px;background:#fff;border:1.5px solid var(--ink);display:flex;align-items:center;gap:8px;padding:0 13px;color:#9aa0a8;font-size:13.5px;cursor:pointer;box-shadow:2px 2px 0 rgba(34,35,40,.5)}
+.sbar:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(34,35,40,.5)}
+.hcam{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;flex:0 0 auto}
+.hcam:active{opacity:.55}
+/* ===== Banner ===== */
+.bnwrap{margin:8px 16px 4px;position:relative}
+.bntrack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:15px;scrollbar-width:none}
+.bntrack::-webkit-scrollbar{display:none}
+.bn{flex:0 0 100%;scroll-snap-align:center;height:126px;border-radius:15px;position:relative;overflow:hidden;padding:19px 21px;color:var(--ink);cursor:pointer;border:1.5px solid var(--ink);box-shadow:3px 3px 0 rgba(34,35,40,.85)}
+.bn .btag{display:inline-block;font-size:10px;font-weight:800;border:1.5px solid var(--ink);padding:2.5px 9px;border-radius:999px;letter-spacing:1px;background:rgba(255,255,255,.55)}
+.bn h3{font-size:20px;font-weight:900;margin-top:9px;letter-spacing:1px}
+.bn p{font-size:12px;opacity:.75;margin-top:5px}
+.bn .bem{position:absolute;right:18px;bottom:-8px;font-size:70px;transform:rotate(-10deg);filter:drop-shadow(0 8px 12px rgba(0,0,0,.15))}
+.bdots{position:absolute;bottom:9px;left:0;right:0;display:flex;justify-content:center;gap:5px}
+.bdots i{width:5px;height:5px;border-radius:3px;background:rgba(27,28,32,.3);transition:all .3s}
+.bdots i.on{width:14px;background:var(--ink)}
+/* ===== 分类卡 ===== */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:12px 16px 2px}
+.g2t{border-radius:14px;padding:15px;height:86px;position:relative;overflow:hidden;cursor:pointer;color:var(--ink);border:1.5px solid var(--ink);box-shadow:3px 3px 0 rgba(34,35,40,.85)}
+.g2t:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.g2t h4{font-size:16.5px;font-weight:800;letter-spacing:1px}
+.g2t p{font-size:10.5px;opacity:.65;margin-top:4px}
+.g2t .em{position:absolute;right:8px;top:50%;transform:translateY(-50%) rotate(-8deg);font-size:42px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.12))}
+.crow2{display:flex;gap:15px;overflow-x:auto;padding:12px 16px 4px;scrollbar-width:none}
+.crow2::-webkit-scrollbar{display:none}
+.cit{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;width:52px}
+.cit:active{opacity:.6}
+.cit .ci{width:46px;height:46px;border-radius:50%;background:#fff;border:1.5px solid var(--ink);box-shadow:2px 2px 0 rgba(34,35,40,.5);display:flex;align-items:center;justify-content:center;font-size:21px}
+.cit span{font-size:10.5px;color:#5c626a;font-weight:600}
+.stitle{display:flex;align-items:baseline;justify-content:space-between;padding:18px 18px 12px}
+.stitle h3{font-size:19px;font-weight:900;color:var(--ink);letter-spacing:.5px}
+.stitle .more{font-size:12px;color:var(--faint);cursor:pointer}
+.disc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px}
+.dcard{border-radius:13px;overflow:hidden;position:relative;height:148px;cursor:pointer;border:1.5px solid var(--ink);box-shadow:3px 3px 0 rgba(34,35,40,.85)}
+.dcard:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.dcard .em{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:36px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12))}
+.dcard .dtx{position:absolute;left:0;right:0;bottom:0;padding:10px;color:var(--ink)}
+.dcard .dtx b{font-size:13.5px;font-weight:800;display:block}
+.dcard .dtx span{font-size:9.5px;opacity:.6;display:block;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.segrow{display:flex;align-items:center;gap:10px;padding:15px 16px 4px}
+.seg{display:flex;background:#e8ebee;border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;font-family:inherit;font-size:12px;font-weight:700;color:#7c828b;padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .2s}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(50,44,36,.12)}
+.sorts{margin-left:auto;display:flex;gap:14px}
+.sorts button{border:0;background:none;font-family:inherit;font-size:12.5px;color:var(--faint);font-weight:600;cursor:pointer}
+.sorts button.on{color:var(--ink);font-weight:800}
+/* ===== 瀑布流 ===== */
+.wf{column-count:2;column-gap:11px;padding:12px 16px 10px}
+.wcard{break-inside:avoid;background:#fff;border:1.5px solid var(--ink);border-radius:13px;box-shadow:3px 3px 0 rgba(34,35,40,.85);overflow:hidden;margin-bottom:11px;cursor:pointer;content-visibility:auto;contain-intrinsic-size:230px}
+.wcard:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.wthumb{position:relative;height:138px;display:flex;align-items:center;justify-content:center}
+.wthumb .em{font-size:44px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.14));z-index:1}
+.wthumb::after{content:"";position:absolute;top:-30px;right:-30px;width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.35)}
+.wtag{position:absolute;top:8px;left:8px;z-index:2;font-size:9.5px;font-weight:800;padding:2.5px 7px;border-radius:6px;border:1px solid var(--ink)}
+.wtag.sale{background:#fff;color:var(--vio2)}
+.wtag.rent{background:#fff;color:#a8722a}
+.wbody{padding:9px 11px 11px}
+.wbody h4{font-size:13px;font-weight:600;color:#2a2d31;line-height:1.42;height:37px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wrow{display:flex;align-items:baseline;margin-top:7px}
+.price{color:var(--price);font-weight:900;font-size:16px}
+.price i{font-style:normal;font-size:10px;font-weight:700}
+.price s{color:var(--faint);font-size:10.5px;font-weight:500;margin-left:5px}
+.wmeta{margin-top:5px;font-size:10px;color:var(--faint);display:flex;align-items:center;gap:4px}
+.wmeta .vf{color:var(--vio2);font-weight:800;font-size:9.5px}
+.endf{text-align:center;color:#5c626a;font-size:11px;padding:6px 0 16px;letter-spacing:2px}
+/* ===== 上新页 ===== */
+.lvhead{padding:58px 18px 12px;display:flex;align-items:center;gap:12px;position:relative;z-index:1}
+.lvhead h2{font-size:22px;font-weight:900;letter-spacing:.5px}
+.lvhead p{font-size:11px;color:#5c626a;margin-top:3px}
+.ring{position:relative;width:52px;height:52px;margin-left:auto;flex:0 0 auto}
+.ring svg{transform:rotate(-90deg)}
+.ring .rn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:var(--vio2)}
+.rfb{height:34px;padding:0 13px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:5px;flex:0 0 auto;box-shadow:2px 2px 0 rgba(34,35,40,.5)}
+.rfb:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(34,35,40,.5)}
+.glab{display:flex;align-items:center;gap:8px;padding:15px 18px 8px;font-size:12.5px;font-weight:800;color:#3a3f46}
+.glab i{width:7px;height:7px;border-radius:50%;background:var(--vio)}
+.lrow{display:flex;align-items:center;gap:11px;margin:0 16px 9px;background:#fff;border:1.5px solid var(--ink);border-radius:14px;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85);padding:9px;cursor:pointer}
+.lrow:active{transform:translate(1px,1px);box-shadow:1.5px 1.5px 0 rgba(34,35,40,.85)}
+.lrow .lth{width:58px;height:58px;border-radius:11px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:26px;position:relative;overflow:hidden;border:1px solid rgba(34,35,40,.25)}
+.lrow h4{font-size:13.5px;font-weight:700;color:#2a2d31;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lrow .lm{margin-top:4px;font-size:10.5px;color:var(--faint);display:flex;gap:7px;align-items:center}
+.lrow .lm b{color:var(--vio2);font-size:9.5px;font-weight:800;border:1px solid rgba(111,95,160,.4);border-radius:4px;padding:0 4px}
+.lrow .lp{margin-left:auto;text-align:right;flex:0 0 auto}
+.lrow .lp .price{font-size:15px}
+.lrow .lp .tm{font-size:10px;color:var(--faint);margin-top:3px}
+.fresh{animation:fin .5s ease}
+@keyframes fin{from{opacity:0;transform:translateY(8px)}}
+/* ===== 我的 ===== */
+.mesc{background:transparent}
+.mhero{position:relative;color:var(--ink)}
+.mhero::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(240,242,245,0) 55%,rgba(236,238,241,.28));pointer-events:none}
+.mhc{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:58px 18px 0}
+.mhc .tbtn{color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;background:rgba(255,255,255,.85);border:1.5px solid var(--ink);border-radius:999px;padding:5px 11px;box-shadow:1.5px 1.5px 0 rgba(34,35,40,.6)}
+.mhc .tbtn:active{transform:translate(1px,1px);box-shadow:.5px .5px 0 rgba(34,35,40,.6)}
+.mava{width:84px;height:84px;border-radius:50%;margin:16px auto 0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;border:3px solid var(--ink);position:relative;z-index:2;box-shadow:4px 4px 0 rgba(34,35,40,.85)}
+.mname{text-align:center;margin-top:13px;position:relative;z-index:2}
+.mname h2{font-size:23px;font-weight:900;display:inline-flex;align-items:center;gap:8px}
+.vip{font-size:10px;font-weight:800;background:var(--ink);color:#f2e9c8;padding:3px 9px;border-radius:999px}
+.mname .sig{font-size:12.5px;color:#4a5058;margin-top:7px}
+.mbad{text-align:center;margin-top:9px;position:relative;z-index:2}
+.mbad span{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--ink);background:rgba(255,255,255,.88);border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px;margin:0 3px;cursor:pointer;box-shadow:1.5px 1.5px 0 rgba(34,35,40,.5)}
+.mstats{display:flex;justify-content:center;gap:28px;margin-top:15px;position:relative;z-index:2}
+.mstats div{text-align:center;cursor:pointer}
+.mstats div:active{opacity:.6}
+.mstats b{font-size:17px;font-weight:900;display:block}
+.mstats span{font-size:10px;color:#5c626a}
+.mtabs{display:flex;gap:24px;padding:17px 20px 4px;position:relative;z-index:2}
+.mtabs b{font-size:16px;color:#5c626a;cursor:pointer;padding-bottom:8px;position:relative;font-weight:700}
+.mtabs b.on{color:var(--ink);font-weight:900}
+.mtabs b.on::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:20px;height:3px;border-radius:3px;background:var(--vio)}
+.mtabs b .rdot{position:absolute;top:1px;right:-11px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+.mgrid{display:grid;grid-template-columns:1fr;padding:10px 18px 18px;position:relative;z-index:2}
+.mglab{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:#3a3f46;padding:8px 2px 9px}
+.mglab b{margin-left:auto;font-size:10.5px;color:#5c626a;font-weight:700}
+.dotb{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink)}
+.dotb.st0{background:#9db88a}.dotb.st1{background:#e8c98a}.dotb.st3{background:#b0a4cf}.dotb.st2{background:#c9ced4}
+/* 交易窗：固定 3 列（保持原样） */
+.mgrid2{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;padding-bottom:6px}
+/* 收藏/足迹：三行格子 · 向左滑动 */
+.mswipe{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-auto-columns:134px;gap:11px;overflow-x:auto;overscroll-behavior-x:contain;padding:2px 2px 8px;scrollbar-width:none;scroll-snap-type:x proximity}
+.mswipe::-webkit-scrollbar{display:none}
+.mswipe .mg{scroll-snap-align:start}
+.mg{cursor:pointer;min-width:0}
+.mg:active{opacity:.75}
+.mg .cov{aspect-ratio:1;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:31px;position:relative;overflow:hidden;border:1.5px solid var(--ink);box-shadow:2px 2px 0 rgba(34,35,40,.85);background:#fff}
+.mg:active .cov{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(34,35,40,.85)}
+.mg h5{font-size:11.5px;font-weight:600;margin-top:7px;color:#2a2d31;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mg p{font-size:9.5px;color:#5c626a;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mg p s{color:var(--faint);text-decoration:line-through;margin-left:2px}
+.mg p i{font-style:normal;color:var(--faint)}
+.mg .st{font-size:9px;font-weight:800;padding:1.5px 6px;border-radius:5px;display:inline-block;border:1px solid rgba(34,35,40,.35);background:rgba(255,255,255,.7)}
+.st0{color:var(--grn2)}.st1{color:#a8722a}.st2{color:#7c828b}.st3{color:var(--vio2)}
+.mlist{margin:16px 18px 8px;position:relative;z-index:2;background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:4px 4px 0 rgba(34,35,40,.85);overflow:hidden}
+.mrow{display:flex;align-items:center;gap:12px;padding:13.5px 15px;cursor:pointer;color:var(--ink)}
+.mrow:active{background:#f4f2ec}
+.mrow+.mrow{border-top:1px solid var(--line)}
+.mrow h4{font-size:13.5px;font-weight:600;flex:1}
+.mrow .rv{font-size:11px;color:var(--faint)}
+.mrow .chev{color:#c3c8cf}
+/* ===== 全屏菜单 ===== */
+.menu{position:absolute;inset:0;z-index:55;background:#eef0f3;opacity:0;visibility:hidden;transform:scale(1.035);transition:all .34s cubic-bezier(.32,.72,.28,1)}
+.menu.open{opacity:1;visibility:visible;transform:none}
+.mwrap{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
+.mwrap::-webkit-scrollbar{display:none}
+.mtop{display:flex;align-items:center;justify-content:space-between;padding:58px 20px 6px;position:relative;z-index:2}
+.mtop h2{font-size:14px;font-weight:900;letter-spacing:2px}
+.mx{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;color:var(--ink);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 rgba(34,35,40,.6)}
+.mx:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(34,35,40,.6)}
+.mucard{margin:12px 20px;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:13px 14px;position:relative;z-index:2;box-shadow:4px 4px 0 rgba(34,35,40,.85);cursor:pointer}
+.mucard:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.mucard .uava{width:48px;height:48px;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px}
+.mucard h3{font-size:17px;font-weight:900}
+.mucard p{font-size:10.5px;color:#7c828b;margin-top:3px}
+.mucard .uv{margin-left:auto;font-size:9.5px;font-weight:800;background:var(--ink);color:#f2e9c8;padding:4px 9px;border-radius:999px}
+.mnav{padding:8px 20px 10px;position:relative;z-index:2}
+.mitem{display:flex;align-items:baseline;gap:13px;padding:12.5px 4px;border-bottom:1.5px solid rgba(34,35,40,.14);cursor:pointer}
+.mitem:active{padding-left:10px;background:rgba(255,255,255,.6)}
+.mitem .no{font-size:10px;font-weight:800;color:var(--vio2);font-style:italic;width:20px}
+.mitem h3{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:1px}
+.mitem .ds{margin-left:auto;font-size:10px;color:#5c626a}
+.mitem .chev{color:#5c626a;font-size:15px}
+.mfoot{margin-top:auto;padding:20px 20px 26px;position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between}
+.mfoot span{font-size:10.5px;color:#5c626a;letter-spacing:1px}
+.mfoot .dots{display:flex;gap:5px}
+.mfoot .dots i{width:8px;height:8px;border-radius:50%}
+/* ===== 子页头 ===== */
+.phead{flex:0 0 auto;display:flex;align-items:center;justify-content:center;padding:54px 16px 12px;position:relative}
+.phead .bk{position:absolute;left:14px;top:52px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;background:#fff;border:1.4px solid #e3e6ea}
+.phead .bk:active{background:#e9ecef;transform:scale(.9)}
+.phead h2{font-size:17.5px;font-weight:800}
+.setbody{padding:4px 14px 30px}
+.sgrp{background:#fff;border-radius:15px;margin-bottom:13px;overflow:hidden}
+.srow{display:flex;align-items:center;gap:6px;padding:16px;cursor:pointer}
+.srow:active{background:#f6f7f9}
+.srow+.srow{border-top:1px solid var(--line)}
+.srow h4{font-size:15px;font-weight:500;color:#232629}
+.srow .srv{margin-left:auto;font-size:12.5px;color:var(--faint)}
+.srow .srv.red{color:var(--vio2);font-weight:700}
+.srow .chev{color:#ccd1d7}
+.sact{background:#fff;border-radius:15px;margin-bottom:13px;overflow:hidden}
+.sact .srow{justify-content:center}
+.sact .srow h4{font-weight:700}
+.slinks{text-align:center;font-size:11.5px;color:#5c7dbb;padding:12px 0 4px}
+/* ===== chips ===== */
+.chips{display:flex;gap:8px;padding:6px 16px 12px;overflow-x:auto;scrollbar-width:none;flex:0 0 auto}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;height:31px;padding:0 14px;border-radius:999px;background:#fff;border:1px solid #e4e7eb;color:#5c626a;font-size:12.5px;font-weight:600;display:flex;align-items:center;cursor:pointer;font-family:inherit}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip:active{transform:scale(.94)}
+/* ===== 列表行 ===== */
+.catlist{background:#fff;border-radius:15px;margin:0 14px 20px;overflow:hidden}
+.crow3{display:flex;align-items:center;gap:12px;padding:12px 13px;cursor:pointer}
+.crow3:active{background:#f6f7f9}
+.crow3+.crow3{border-top:1px solid var(--line)}
+.crow3 .cth{width:74px;height:74px;border-radius:13px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;overflow:hidden;border:1.5px solid var(--ink);box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.crow3 h4{font-size:14px;font-weight:700;color:#2a2d31;line-height:1.4}
+.crow3 .cm{margin-top:7px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.mtag{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:5px;background:#f1f3f5;color:#7c828b}
+.mtag.hi{background:rgba(139,123,184,.14);color:var(--vio2)}
+.crow3 .pr{margin-left:auto;text-align:right;flex:0 0 auto}
+.crow3 .pr .who{font-size:10px;color:var(--faint);margin-top:5px}
+/* ===== 搜索页 ===== */
+.shead{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:54px 14px 10px}
+.sinput{flex:1;height:38px;border-radius:999px;background:#e8ebee;border:0;outline:none;font-family:inherit;font-size:14px;padding:0 16px;color:var(--ink)}
+.sgo{height:36px;padding:0 17px;border-radius:999px;border:0;background:var(--ink);color:#fff;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;flex:0 0 auto}
+.sgo:active{transform:scale(.94)}
+.shis{padding:12px 16px 0}
+.shis .sh{display:flex;align-items:center;justify-content:space-between}
+.shis .sh b{font-size:15px;font-weight:800}
+.shis .sh span{color:var(--faint);cursor:pointer;font-size:11.5px}
+.htags{display:flex;flex-wrap:wrap;gap:9px;padding:12px 0 4px}
+.hotlist{padding:0 16px}
+.hrow{display:flex;align-items:center;gap:14px;padding:11.5px 6px;cursor:pointer;border-radius:10px}
+.hrow:active{background:#ebedef}
+.hrow .no{width:20px;text-align:center;font-size:15px;font-weight:900;color:#c3c8cf;font-style:italic}
+.hrow.top .no{color:var(--vio2)}
+.hrow .kw{font-size:14px;color:#2a2d31;font-weight:500}
+.hrow .hf{font-size:9px;font-weight:800;color:#fff;background:var(--vio2);border-radius:4px;padding:1.5px 5px;margin-left:6px}
+.hrow .hv{margin-left:auto;font-size:10.5px;color:var(--faint)}
+.scount{padding:14px 18px 10px;font-size:13px;color:var(--sub)}
+.scount b{color:var(--vio2)}
+.nores{text-align:center;padding:70px 0;color:var(--faint);font-size:13px}
+.nores .ne{font-size:42px;display:block;margin-bottom:14px}
+/* ===== 详情 ===== */
+.dhero{position:relative;height:308px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dhero .em{font-size:90px;filter:drop-shadow(0 16px 26px rgba(0,0,0,.18));z-index:1;animation:flo 4s ease-in-out infinite}
+@keyframes flo{50%{transform:translateY(-7px)}}
+.dhero::after{content:"";position:absolute;top:-40px;right:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.3)}
+.dhero::before{content:"";position:absolute;bottom:-50px;left:-40px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.2)}
+.dback{position:absolute;top:56px;left:16px;z-index:5;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:1.5px solid var(--ink);color:var(--ink);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 rgba(34,35,40,.6)}
+.dback:active{transform:scale(.88)}
+.dfav{position:absolute;top:56px;right:16px;z-index:5;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);border:1.5px solid var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 rgba(34,35,40,.6);color:#9aa0a8}
+.dfav.on{color:var(--vio2)}
+.dhero .wtag{top:64px;right:64px;left:auto;font-size:10px;padding:4px 9px}
+.dbody{padding:16px 16px 16px;flex:1}
+.pricebar{display:flex;align-items:baseline;gap:8px}
+.pricebar .price{font-size:26px}
+.pricebar .dep{font-size:11px;color:var(--sub)}
+.dtit{font-size:19px;font-weight:800;color:var(--ink);line-height:1.42;margin-top:8px}
+.dmeta{font-size:11px;color:var(--faint);margin-top:9px;display:flex;gap:12px}
+.dmeta b{color:var(--vio2);font-weight:700}
+.dcd{margin-top:14px;background:#fff;border:1.5px solid var(--ink);border-radius:15px;padding:15px;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85)}
+.dcd h5{font-size:12px;font-weight:800;color:var(--faint);letter-spacing:2px;margin-bottom:9px}
+.dcd p{font-size:13.5px;line-height:1.85;color:#3a3f46}
+.specs{margin-top:10px;border-top:1px dashed var(--line);padding-top:11px}
+.specs li{list-style:none;font-size:12.5px;color:#5c626a;padding:4.5px 0 4.5px 17px;position:relative}
+.specs li::before{content:"";position:absolute;left:2px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--vio)}
+.seller{display:flex;align-items:center;gap:12px}
+.seller .sa{width:46px;height:46px;border-radius:50%;background:linear-gradient(140deg,var(--vio),var(--grn));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex:0 0 auto;border:1.5px solid var(--ink)}
+.seller h4{font-size:14.5px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:6px}
+.seller .vf{font-size:9.5px;font-weight:800;color:#fff;background:var(--vio2);border-radius:5px;padding:1.5px 5px}
+.seller p{font-size:11px;color:var(--faint);margin-top:4px}
+.seller p b{color:#b8862f;font-weight:800}
+.chatb{margin-left:auto;flex:0 0 auto;height:33px;padding:0 15px;border-radius:999px;border:1.4px solid rgba(111,95,160,.5);background:#fff;color:var(--vio2);font-size:12px;font-weight:700;font-family:inherit;cursor:pointer}
+.chatb:active{background:rgba(139,123,184,.1)}
+.safety{display:flex;gap:10px;font-size:11.5px;color:#7c828b;line-height:1.7}
+.safety b{color:var(--ink)}
+.safety .sic{flex:0 0 auto;width:34px;height:34px;border-radius:11px;background:rgba(139,123,184,.12);color:var(--vio2);display:flex;align-items:center;justify-content:center}
+.dbar{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:10px 14px 24px;background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+.dico{width:44px;height:46px;border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:#5c626a;font-family:inherit}
+.dico:active{opacity:.55}
+.dico span{font-size:9px;font-weight:600}
+.dico.fav{color:var(--vio2)}
+.mainbtn{flex:1;height:45px;border-radius:999px;border:1.5px solid var(--ink);font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer;color:#fff;transition:transform .15s;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85)}
+.mainbtn:active{transform:translate(1px,1px);box-shadow:1.5px 1.5px 0 rgba(34,35,40,.85)}
+.mainbtn.buy{background:linear-gradient(120deg,var(--grn),var(--vio))}
+.mainbtn.rent{background:linear-gradient(120deg,#c9a24b,#a8722a)}
+/* ===== 发布页 ===== */
+.pform{padding:4px 14px 30px}
+.pfgrp{background:#fff;border:1.5px solid var(--ink);border-radius:15px;padding:14px;margin-bottom:12px;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85)}
+.pfgrp h5{font-size:12px;font-weight:800;color:var(--faint);letter-spacing:2px;margin-bottom:10px}
+.pfin{width:100%;border:0;outline:none;font-family:inherit;font-size:15px;color:var(--ink);background:#f2f4f6;border-radius:11px;padding:12px 14px}
+.pfin:focus{background:#eef1f4}
+.pfin.ta{height:88px;resize:none;line-height:1.6}
+.pfrow{display:flex;gap:9px;flex-wrap:wrap}
+.pphotos{display:flex;gap:10px}
+.pphoto{width:76px;height:76px;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:1.6px dashed #a9aeb6;color:var(--faint);font-size:11px;background:#fafbfc}
+.pphoto:active{transform:scale(.94)}
+/* ===== Sheet / Modal / Toast ===== */
+.mask2{position:absolute;inset:0;background:rgba(30,28,32,.48);opacity:0;pointer-events:none;transition:opacity .3s;z-index:64}
+.mask2.show{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:66;background:#fff;border-radius:20px 20px 0 0;padding:12px 20px 30px;transform:translateY(105%);transition:transform .38s cubic-bezier(.32,.72,.28,1);max-height:78%;overflow-y:auto;scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+.sheet.open{transform:none}
+.grab{width:38px;height:4px;border-radius:4px;background:#e2e5e9;margin:0 auto 14px}
+.sheet h3{font-size:17px;font-weight:800;color:var(--ink)}
+.ssum{display:flex;align-items:center;gap:12px;margin:14px 0;background:#f4f5f7;border-radius:13px;padding:11px}
+.ssum .sth{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 auto;border:1.5px solid var(--ink)}
+.ssum h4{font-size:13.5px;font-weight:700;color:#2a2d31}
+.ssum p{font-size:11px;color:var(--faint);margin-top:4px}
+.stepper{display:flex;align-items:center;justify-content:space-between;margin:15px 0}
+.stepper .lab{font-size:14px;font-weight:700;color:var(--ink)}
+.stepper .lab i{font-style:normal;font-size:11px;color:var(--faint);display:block;margin-top:3px;font-weight:500}
+.stctl{display:flex;align-items:center;gap:15px}
+.stctl button{width:33px;height:33px;border-radius:50%;background:#f1f3f5;border:0;color:var(--ink);font-size:16px;cursor:pointer;font-family:inherit}
+.stctl b{font-size:16px;min-width:22px;text-align:center}
+.payrow{display:flex;gap:9px;margin:13px 0}
+.payrow .chip{flex:1;justify-content:center;height:42px}
+.payrow .chip.on{background:rgba(139,123,184,.12);border-color:rgba(111,95,160,.45);color:var(--vio2)}
+.tot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--sub);padding:5px 0}
+.tot.big{font-size:14px;color:var(--ink);font-weight:800;border-top:1px dashed var(--line);margin-top:8px;padding-top:12px}
+.tot.big b{color:var(--price);font-size:20px}
+.confirm{width:100%;margin-top:15px;height:48px;border-radius:999px;border:1.5px solid var(--ink);background:linear-gradient(120deg,var(--grn),var(--vio));color:#fff;font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:2.5px 2.5px 0 rgba(34,35,40,.85)}
+.confirm:active{transform:translate(1px,1px);box-shadow:1.5px 1.5px 0 rgba(34,35,40,.85)}
+.steps{margin:14px 0 4px}
+.step{display:flex;gap:13px}
+.step .rail{display:flex;flex-direction:column;align-items:center}
+.step .dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:0 0 auto}
+.step .ln{width:2px;flex:1;min-height:22px;background:#e6e8eb}
+.step.done .dot{background:var(--grn);color:#fff}
+.step.cur .dot{background:var(--vio);color:#fff;box-shadow:0 0 0 4px rgba(139,123,184,.18)}
+.step.todo .dot{background:#eef0f2;color:var(--faint)}
+.step .sb2{padding-bottom:16px}
+.step .sb2 h5{font-size:13.5px;font-weight:800;color:var(--ink)}
+.step.todo .sb2 h5{color:var(--faint)}
+.step .sb2 p{font-size:11.5px;color:var(--sub);margin-top:3px;line-height:1.6}
+.duo{display:flex;gap:10px;margin-top:14px}
+.duo button{flex:1;height:44px;border-radius:999px;font-family:inherit;font-size:13.5px;font-weight:800;cursor:pointer;border:1.4px solid #e0e3e7;background:#fff;color:var(--ink)}
+.duo button.pri{border:1.5px solid var(--ink);background:linear-gradient(120deg,var(--grn),var(--vio));color:#fff;box-shadow:2px 2px 0 rgba(34,35,40,.85)}
+.duo button:active{transform:translate(1px,1px)}
+.chatbox{margin:13px 0 4px;display:flex;flex-direction:column;gap:9px;max-height:250px;overflow-y:auto}
+.cmsg{max-width:76%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.55}
+.cmsg.them{background:#f1f3f5;color:#2a2d31;border-bottom-left-radius:5px;align-self:flex-start}
+.cmsg.me{background:linear-gradient(120deg,var(--grn),var(--vio));color:#fff;border-bottom-right-radius:5px;align-self:flex-end}
+.cin{display:flex;gap:9px;margin-top:12px}
+.cin input{flex:1;height:40px;border-radius:999px;border:1.4px solid #e0e3e7;outline:none;font-family:inherit;font-size:13.5px;padding:0 15px}
+.cin button{width:46px;height:40px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-size:13px;font-weight:800;cursor:pointer}
+.walcard{margin:14px 0 4px;border:1.5px solid var(--ink);border-radius:16px;padding:18px;background:linear-gradient(130deg,var(--grn2),var(--vio2));color:#fff;box-shadow:3px 3px 0 rgba(34,35,40,.85)}
+.walcard b{font-size:28px;font-weight:900;display:block}
+.walcard span{font-size:11px;opacity:.85}
+.wlab{font-size:11px;font-weight:800;color:var(--faint);letter-spacing:2px;margin:16px 0 8px}
+.wnow{display:flex;align-items:center;gap:11px;margin:2px 0 4px;background:rgba(139,123,184,.08);border:1.5px solid rgba(111,95,160,.45);border-radius:14px;padding:11px;cursor:pointer}
+.wnow:active{transform:translate(1px,1px)}
+.wnow .wth{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;flex:0 0 auto;border:1.5px solid var(--ink);background:rgba(255,255,255,.7)}
+.wnow h4{font-size:13.5px;font-weight:800;color:var(--ink)}
+.wnow p{font-size:11px;color:var(--vio2);font-weight:700;margin-top:3px}
+.wlist .wrow2{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.wlist .wrow2:last-child{border-bottom:0}
+.wlist .wrow2:active{background:#f6f7f9}
+.wrow2 .wi{width:34px;height:34px;border-radius:11px;background:#f2f4f6;display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+.wrow2 h5{font-size:13px;font-weight:700;color:var(--ink)}
+.wrow2 p{font-size:10.5px;color:var(--faint);margin-top:2px}
+.wrow2 .wa{margin-left:auto;font-weight:800;font-size:14px;flex:0 0 auto}
+.wa.plus{color:var(--grn2)}
+.wa.minus{color:var(--price)}
+.wrow2 .wc{color:#d3d7dc;font-size:14px;flex:0 0 auto}
+.invcode{margin:14px 0;padding:16px;border:2px dashed rgba(111,95,160,.45);border-radius:14px;text-align:center;background:rgba(139,123,184,.06)}
+.invcode b{font-size:22px;font-weight:900;letter-spacing:3px;color:var(--vio2)}
+.invcode p{font-size:11px;color:var(--sub);margin-top:6px}
+.wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:14px 0 4px}
+.wop{aspect-ratio:.86;border-radius:14px;cursor:pointer;position:relative;border:2.5px solid transparent;overflow:hidden}
+.wop.on{border-color:var(--ink)}
+.wop:active{transform:scale(.95)}
+.wop span{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 7px;font-size:10.5px;font-weight:800;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.4))}
+.wop .ck{position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;display:none;align-items:center;justify-content:center}
+.wop.on .ck{display:flex}
+.modal{position:absolute;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:34px;opacity:0;pointer-events:none;transition:opacity .28s}
+.modal.show{opacity:1;pointer-events:auto}
+.mbox{background:#fff;border-radius:20px;padding:25px 22px 19px;width:100%;transform:scale(.93);transition:transform .28s;max-height:80%;overflow-y:auto}
+.modal.show .mbox{transform:none}
+.mico{width:56px;height:56px;border-radius:50%;margin:0 auto;background:rgba(139,123,184,.12);color:var(--vio2);display:flex;align-items:center;justify-content:center}
+.mbox h3{text-align:center;font-size:17.5px;font-weight:800;margin-top:12px;color:var(--ink)}
+.mbox .msub{text-align:center;font-size:11px;color:var(--faint);margin-top:5px}
+.mlist2{margin:14px 0 4px}
+.mlist2 li{list-style:none;display:flex;gap:10px;font-size:12.5px;color:#5c626a;line-height:1.7;padding:6px 0}
+.mlist2 li b{color:var(--ink)}
+.mlist2 li .mk{flex:0 0 auto;width:19px;height:19px;border-radius:6px;background:rgba(139,123,184,.14);color:var(--vio2);font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.mok{width:100%;height:44px;border-radius:999px;border:0;background:#f1f3f5;color:var(--ink);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:12px}
+.toast{position:absolute;left:50%;bottom:128px;transform:translate(-50%,14px);z-index:90;background:rgba(24,25,29,.92);color:#fff;border-radius:12px;padding:11px 19px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="phone">
+  <div class="sidebtn sb-mute"></div><div class="sidebtn sb-v1"></div><div class="sidebtn sb-v2"></div><div class="sidebtn sb-pw"></div>
+  <div class="app">
+    <div class="island"></div>
+    <div class="statusbar" id="sb">
+      <span>9:41</span>
+      <span style="display:flex;gap:6px;align-items:center">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="4.7" y="5" width="3" height="7" rx="1"/><rect x="9.4" y="2.5" width="3" height="9.5" rx="1"/><rect x="14.1" y="0" width="3" height="12" rx="1"/></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 9.6a1.4 1.4 0 110 2.4 1.4 1.4 0 010-2.4zM8 6c-1.6 0-3 .6-4.1 1.7l1.3 1.3a4.2 4.2 0 015.6 0l1.3-1.3A5.8 5.8 0 008 6zM8 2.4C5.5 2.4 3.2 3.4 1.5 5.1l1.3 1.3A7.5 7.5 0 018 4.2c2 0 3.9.8 5.2 2.2l1.3-1.3A9.3 9.3 0 008 2.4z"/></svg>
+        <svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="21" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2.2" y="2.2" width="15" height="7.6" rx="2" fill="currentColor"/><path d="M23.2 3.8v4.4c1.1-.3 1.8-1.1 1.8-2.2s-.7-1.9-1.8-2.2z" fill="currentColor" opacity=".4"/></svg>
+      </span>
+    </div>
+    <div class="hb" id="hbar"></div>
+
+    <div class="views">
+      <!-- ============ 首页 ============ -->
+      <section class="view on" id="v0">
+        <div class="artbg"><div class="art-swirl"></div><div class="art-grain"></div><div class="art-veil"></div></div>
+        <div class="hhead">
+          <span class="burger" data-act="menu-open"><i data-ic="menu" data-sz="23"></i><i class="bdg">2</i></span>
+          <div class="sbar" data-act="search"><i data-ic="search" data-sz="15"></i>搜索教材、相机、真题笔记…</div>
+          <span class="hcam" data-act="publish"><i data-ic="plus" data-sz="22"></i></span>
+        </div>
+        <div class="sc">
+          <div class="bnwrap"><div class="bntrack" id="bntrack"></div><div class="bdots" id="bdots"></div></div>
+          <div class="grid2" id="grid2"></div>
+          <div class="crow2" id="catrow"></div>
+          <div class="stitle"><h3>快速发现</h3><span class="more" data-act="allcat">查看全部 ›</span></div>
+          <div class="disc" id="disc"></div>
+          <div class="segrow">
+            <div class="seg" id="segMode"><button class="on" data-act="mode" data-v="sale">闲置买卖</button><button data-act="mode" data-v="rent">短期租借</button></div>
+            <div class="sorts" id="sorts"><button class="on" data-act="sort" data-v="hot">综合</button><button data-act="sort" data-v="new">最新</button><button data-act="sort" data-v="cheap">价格</button></div>
+          </div>
+          <div class="wf" id="feed"></div>
+          <div class="endf" style="padding-bottom:118px">— 仅限本校 · 到底啦 —</div>
+        </div>
+      </section>
+
+      <!-- ============ 上新 ============ -->
+      <section class="view" id="v1">
+        <div class="artbg"><div class="art-swirl"></div><div class="art-grain"></div><div class="art-veil"></div></div>
+        <div class="lvhead">
+          <div><h2>上新动态</h2><p>全校最新挂出的链接 · 每 10 分钟自动汇聚</p></div>
+          <div class="ring"><svg width="52" height="52"><circle cx="26" cy="26" r="22" stroke="rgba(27,28,32,.12)" stroke-width="3.5" fill="none"/><circle id="ringBar" cx="26" cy="26" r="22" stroke="#6f5fa0" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="0"/></svg><div class="rn" id="ringNum">10:00</div></div>
+          <button class="rfb" data-act="refresh"><i data-ic="refresh" data-sz="13"></i>刷新</button>
+        </div>
+        <div class="sc" id="liveList"></div>
+      </section>
+
+      <!-- ============ 我的 ============ -->
+      <section class="view" id="v2">
+        <div class="artbg"><div class="art-swirl"></div><div class="art-grain"></div><div class="art-veil"></div></div>
+        <div class="sc mesc">
+          <div class="mhero">
+            <div class="mhc">
+              <span class="tbtn" data-act="menu-open"><i data-ic="menu" data-sz="16"></i></span>
+              <span class="tbtn" data-act="mstate"><span id="stateTx">＋ 添加状态</span></span>
+              <span class="tbtn" data-act="open-settings"><i data-ic="gear" data-sz="16"></i></span>
+            </div>
+            <div class="mava">医</div>
+            <div class="mname"><h2>重小医 <span class="vip">同窗PLUS·伍</span></h2><div class="sig">让每一件闲置，都被下一位同窗需要。</div></div>
+            <div class="mbad">
+              <span data-act="verify">🎖 12枚徽章 <b style="color:var(--vio2)">+1</b></span>
+              <span data-act="verify">🏅 实名交易 20 次 · 零纠纷</span>
+            </div>
+            <div class="mstats">
+              <div data-act="setting" data-v="我的发布"><b>12</b><span>发布</span></div>
+              <div data-act="setting" data-v="卖出记录"><b>8</b><span>卖出</span></div>
+              <div data-act="setting" data-v="我的收藏"><b>23</b><span>收藏</span></div>
+              <div data-act="verify"><b style="color:var(--vio2)">98</b><span>信用分</span></div>
+            </div>
+          </div>
+          <div style="position:relative;z-index:2;padding-bottom:100px">
+            <div class="mlist">
+              <div class="mrow" data-act="wallet"><i data-ic="wallet" data-sz="19" style="color:var(--vio2)"></i><h4>我的钱包</h4><span class="rv">余额 ¥128.50</span><span class="chev">›</span></div>
+              <div class="mrow" data-act="invite"><i data-ic="gift" data-sz="19" style="color:var(--grn2)"></i><h4>邀请同窗</h4><span class="rv">双方各得 ¥5 券</span><span class="chev">›</span></div>
+              <div class="mrow" data-act="help"><i data-ic="help" data-sz="19" style="color:#b8862f"></i><h4>帮助与反馈</h4><span class="rv"></span><span class="chev">›</span></div>
+            </div>
+            <div class="mtabs" id="mtabs"><b class="on" data-act="metab" data-v="0">交易窗<i class="rdot"></i></b><b data-act="metab" data-v="1">收藏</b><b data-act="metab" data-v="2">足迹</b></div>
+            <div class="mgrid" id="mgrid"></div>
+          </div>
+        </div>
+      </section>
+    </div><!-- /views -->
+
+    <div class="mini" id="mini" data-act="order-open">
+      <div class="art" style="background:linear-gradient(140deg,rgba(201,216,189,.6),rgba(176,164,207,.6)),#fff">📕</div>
+      <div class="mt"><b>待面交 · 《病理学》第9版</b>今天 14:00 · 南区5号楼大厅 · 与温同学</div>
+      <span class="chev">›</span>
+      <button class="cls" data-act="mini-close">✕</button>
+    </div>
+
+    <nav class="tabbar" id="tabbar">
+      <b class="on" data-act="tab" data-v="0">首页</b>
+      <b data-act="tab" data-v="1">上新<i class="rd"></i></b>
+      <b data-act="tab" data-v="2">我的</b>
+    </nav>
+
+    <section class="sub" id="subCat">
+      <div class="phead"><button class="bk" data-act="back" data-p="subCat"><i data-ic="back" data-sz="19"></i></button><h2 id="catTitle">分类</h2></div>
+      <div class="chips" id="catChips">
+        <button class="chip on" data-act="cfilter" data-v="all">全部</button>
+        <button class="chip" data-act="cfilter" data-v="sale">闲置出售</button>
+        <button class="chip" data-act="cfilter" data-v="rent">可租借</button>
+        <button class="chip" data-act="cfilter" data-v="likeNew">九成新以上</button>
+      </div>
+      <div class="sc"><div class="catlist" id="catList"></div></div>
+    </section>
+
+    <section class="sub" id="subSearch">
+      <div class="shead">
+        <button class="bk" data-act="back" data-p="subSearch" style="position:static;width:34px;height:34px;border:1.4px solid #e3e6ea"><i data-ic="back" data-sz="18"></i></button>
+        <input class="sinput" id="sInput" placeholder="搜教材 / 花卉 / 相机 / 真题…">
+        <button class="sgo" data-act="search-go">搜索</button>
+      </div>
+      <div class="sc">
+        <div id="sDefault">
+          <div class="shis"><div class="sh"><b>搜索历史</b><span data-act="clear-hist">清空</span></div><div class="htags" id="histTags"></div></div>
+          <div class="stitle" style="padding:14px 18px 6px"><h3 style="font-size:16px">猜你想搜</h3><span class="more" style="font-size:11px;color:var(--faint)">实时热搜</span></div>
+          <div class="hotlist" id="hotList"></div>
+        </div>
+        <div id="sResults"></div>
+        <div style="height:40px"></div>
+      </div>
+    </section>
+
+    <section class="sub" id="subSet">
+      <div class="phead"><button class="bk" data-act="back" data-p="subSet"><i data-ic="back" data-sz="19"></i></button><h2>设置</h2></div>
+      <div class="sc"><div class="setbody">
+        <div class="sgrp"><div class="srow" data-act="setting" data-v="账号与安全"><h4>账号与安全</h4><i data-ic="chev" data-sz="16" class="chev"></i></div></div>
+        <div class="sgrp">
+          <div class="srow" data-act="verify"><h4>实名认证</h4><span class="srv red">已认证 · 2023220xxx</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="学籍信息"><h4>学籍信息</h4><span class="srv">第二临床 · 影像本科</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="收货地址"><h4>收货地址</h4><span class="srv">南区5号楼面交点</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="支付方式"><h4>支付方式</h4><span class="srv">校园卡 · 已绑定</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+        </div>
+        <div class="sgrp">
+          <div class="srow" data-act="setting" data-v="消息通知"><h4>消息通知</h4><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="隐私与权限"><h4>隐私与权限</h4><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="通用"><h4>通用</h4><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="存储空间"><h4>存储空间</h4><span class="srv">228 MB</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+          <div class="srow" data-act="setting" data-v="青少年模式"><h4>青少年模式</h4><span class="srv">未开启</span><i data-ic="chev" data-sz="16" class="chev"></i></div>
+        </div>
+        <div class="sact">
+          <div class="srow" data-act="setting" data-v="切换账号"><h4>切换账号</h4></div>
+          <div class="srow" data-act="logout"><h4>退出登录/关闭</h4></div>
+        </div>
+        <div class="slinks">同窗集市 v1.0.0 · 《个人信息清单》 · 《第三方共享清单》</div>
+      </div></div>
+    </section>
+
+    <section class="sub" id="subPub">
+      <div class="phead"><button class="bk" data-act="back" data-p="subPub"><i data-ic="back" data-sz="19"></i></button><h2>发布闲置</h2></div>
+      <div class="sc"><div class="pform">
+        <div class="pfgrp"><h5>拍 3 张实拍图</h5>
+          <div class="pphotos">
+            <div class="pphoto" data-act="pphoto" data-v="📦">＋<span>添加</span></div>
+            <div class="pphoto" data-act="pphoto" data-v="📐">＋<span>添加</span></div>
+            <div class="pphoto" data-act="pphoto" data-v="💡">＋<span>添加</span></div>
+          </div>
+        </div>
+        <div class="pfgrp"><h5>标题 & 描述</h5>
+          <input class="pfin" id="pubTitle" placeholder="一句话描述你的宝贝（必填）" style="margin-bottom:9px">
+          <textarea class="pfin ta" id="pubDesc" placeholder="成色如何？哪里有瑕疵？怎么面交？"></textarea>
+        </div>
+        <div class="pfgrp"><h5>分类</h5><div class="pfrow" id="pubCats"></div></div>
+        <div class="pfgrp"><h5>成色</h5><div class="pfrow" id="pubCond"></div></div>
+        <div class="pfgrp"><h5>价格</h5><input class="pfin" id="pubPrice" type="number" placeholder="¥ 期望出售价（可小刀）"></div>
+        <button class="confirm" data-act="pub-submit" style="margin-top:4px">实名发布 · 挂上交易窗</button>
+        <p style="text-align:center;font-size:10.5px;color:var(--faint);margin-top:10px">发布即代表同意《校内交易规范》 · 学号实名可追溯</p>
+      </div></div>
+    </section>
+
+    <section class="sub upmv" id="subDetail" style="padding:0">
+      <div class="sc" style="padding-bottom:0" id="dScroll">
+        <div class="dhero" id="dHero">
+          <span class="em" id="dEm"></span><span class="wtag" id="dTag"></span>
+          <button class="dback" data-act="back" data-p="subDetail"><i data-ic="back" data-sz="18"></i></button>
+          <button class="dfav" id="dFav" data-act="dfav"><i data-ic="heart" data-sz="18"></i></button>
+        </div>
+        <div class="dbody" id="dBody"></div><div style="height:10px"></div>
+      </div>
+      <div class="dbar" id="dBar"></div>
+    </section>
+
+    <div class="menu" id="menu">
+      <div class="artbg"><div class="art-swirl"></div><div class="art-grain"></div><div class="art-veil"></div></div>
+      <div class="mwrap">
+        <div class="mtop"><h2>同窗集市</h2><button class="mx" data-act="menu-close">✕</button></div>
+        <div class="mucard" data-act="me-from-menu">
+          <div class="uava">医</div>
+          <div><h3>重小医</h3><p>第二临床 · 影像本科 · 2023级</p></div>
+          <span class="uv">同窗PLUS·伍</span>
+        </div>
+        <nav class="mnav">
+          <div class="mitem" data-act="nav" data-v="0"><span class="no">01</span><h3>逛集市</h3><span class="ds">首页 · 精选好物</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="nav" data-v="1"><span class="no">02</span><h3>上新动态</h3><span class="ds">10 分钟一汇</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="me-from-menu2"><span class="no">03</span><h3>我的交易窗</h3><span class="ds">6 件在售</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="publish"><span class="no">04</span><h3>发布闲置</h3><span class="ds">实名挂链</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="search"><span class="no">05</span><h3>搜索好物</h3><span class="ds">教材 / 相机 / 花</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="wallopen"><span class="no">06</span><h3>主题壁纸</h3><span class="ds">莫奈绿 · 雾紫 …</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="open-settings"><span class="no">07</span><h3>设置</h3><span class="ds">账号 · 隐私</span><span class="chev">›</span></div>
+          <div class="mitem" data-act="about" style="border-bottom:0"><span class="no">08</span><h3>关于同窗集市</h3><span class="ds">v1.0 校内试点</span><span class="chev">›</span></div>
+        </nav>
+        <div class="mfoot">
+          <span>让每一件闲置都被需要 ♻️</span>
+          <div class="dots"><i style="background:var(--grn)"></i><i style="background:var(--vio)"></i><i style="background:#e8c98a"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mask2" id="mask" data-act="sheet-close"></div>
+    <div class="sheet" id="sheet"><div class="grab"></div><div id="sheetBody"></div></div>
+    <div class="modal" id="modal"><div class="mbox" id="modalBox"></div></div>
+    <div class="toast" id="toast"></div>
+  </div><!-- /app -->
+</div><!-- /phone -->
+</div><!-- /stage -->
+
+<script>
+/* ============ 图标 ============ */
+const IC={
+menu:'<path d="M4 7h16M4 12h16M4 17h9"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+back:'<path d="M15 5l-7 7 7 7"/>',
+chev:'<path d="M9 5.5l6.5 6.5L9 18.5"/>',
+gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.9 5.9l1.7 1.7M16.4 16.4l1.7 1.7M18.1 5.9l-1.7 1.7M7.6 16.4l-1.7 1.7"/>',
+heart:'<path d="M12 20.5S4 15.4 4 9.9A4.3 4.3 0 0112 7.2a4.3 4.3 0 018 2.7c0 5.5-8 10.6-8 10.6z"/>',
+wallet:'<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18M15.5 15h2"/>',
+gift:'<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M4 10h16M12 6v14M12 6c-1.5-3-6-3-6 0 0 2 3 4 6 4 3 0 6-2 6-4 0-3-4.5-3-6 0z"/>',
+help:'<circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.2A2.5 2.5 0 0114.4 10c0 1.8-2.4 2-2.4 3.4M12 16.6v.2"/>',
+refresh:'<path d="M20 12a8 8 0 11-2.3-5.7M20 3.5V9h-5.5"/>',
+shield:'<path d="M12 3l7 2.8v5.3c0 4.6-3 8.1-7 9.9-4-1.8-7-5.3-7-9.9V5.8z"/><path d="M9 11.6l2 2 4-4.2"/>'};
+const ic=(n,s=20)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+document.querySelectorAll('[data-ic]').forEach(el=>el.innerHTML=ic(el.dataset.ic,el.dataset.sz||20));
+
+/* ============ 等比缩放 ============ */
+const DW=392,DH=848,PAD=18;
+function fit(){const k=Math.min((innerWidth-PAD*2)/DW,(innerHeight-PAD*2)/DH,1);
+document.documentElement.style.setProperty('--k',Math.max(k,.3).toFixed(4));}
+const isTouch='ontouchstart' in window;
+fit();
+if(isTouch){
+let lw=innerWidth,lo=innerWidth>innerHeight;
+addEventListener('resize',()=>{const w=innerWidth,o=w>innerHeight;
+if(Math.abs(w-lw)>90||o!==lo){lw=w;lo=o;fit();}});
+addEventListener('orientationchange',()=>setTimeout(fit,120));
+}else{addEventListener('resize',fit);}
+
+/* ============ 数据 ============ */
+const CATS=[
+{id:'book',n:'教材书籍',i:'📚'},{id:'elec',n:'电子数码',i:'🎧'},{id:'rent',n:'短期租借',i:'📷'},{id:'note',n:'学习资料',i:'📝'},
+{id:'life',n:'生活好物',i:'🪴'},{id:'plant',n:'绿植园艺',i:'🌷'},{id:'food',n:'食饮零食',i:'🍱'},{id:'beauty',n:'美妆个护',i:'💄'},
+{id:'sport',n:'运动装备',i:'🏸'},{id:'wear',n:'服饰鞋包',i:'👟'}];
+const SELLERS=['陈同学 · 临床2021级','林同学 · 口腔2022级','周同学 · 药学2021级','苏同学 · 护理2023级','许同学 · 影像2022级','韩同学 · 预防2023级','江同学 · 检验2023级','方同学 · 临床2024级','温同学 · 临床2021级','沈同学 · 麻醉2022级'];
+let ID=0;const ITEMS=[];
+const add=(cat,m,t,e,g,p,x={})=>{const o=Object.assign({_id:++ID,cat,m,t,e,g,p,cd:'九成新',sc:96+ID%4,tm:(ID*37)%240+8,vw:30+(ID*53)%260,d:'',sp:['校内面交优先','支持当面验货','可小刀议价']},x);if(!o.s)o.s=SELLERS[ID%10];ITEMS.push(o);};
+add('book','sale','《系统解剖学》第9版 · 带笔记','📕',1,28,{op:49,s:SELLERS[0],tm:12,vw:143,d:'上一届学长正版教材，重点章节有铅笔划线与便利贴索引，内页干净无缺页，附赠手写期末重点对照图。',sp:['人民卫生出版社 · 第9版彩印','附手写重点 & 便利贴索引','图书馆 / 南区5号楼可面交']});
+add('book','sale','《生理学》人卫第9版 + 习题册','📗',2,22,{op:38,s:SELLERS[1],d:'书脊完好仅扉页有姓名，配套人卫同步习题册一起出，期末复习一套搞定。',sp:['含同步习题册','页面整洁','可小刀，先到先得']});
+add('book','sale','《生物化学与分子生物学》','📘',1,25,{op:45,s:SELLERS[2],d:'边缘轻微磨损，内页几乎无笔记，适合考研生化打底用。'});
+add('book','sale','《组织学与胚胎学》彩色图谱版','📔',2,18,{op:32,s:SELLERS[3],d:'切片彩图非常清晰，期末看图识片神器，考完即出。',sp:['图谱版 · 彩印','切片图清晰','当面验货']});
+add('book','sale','《病理学》第9版 · 荧光笔重点','📕',9,24,{op:42,s:SELLERS[4],tm:95,vw:118,d:'重点章节有荧光笔标注，字迹工整不潦草，直接跟着划重点复习，省一半时间。',sp:['第9版','荧光笔重点已划好','附历年考点页码清单']});
+add('book','sale','《诊断学》第9版','📗',1,30,{op:52,s:SELLERS[5],d:'见习课刚考完，几乎全新，体格检查章节有少量笔记。'});
+add('book','sale','《内科学》第10版 上下册','📚',9,55,{op:98,s:SELLERS[8],tm:150,d:'考研结束整套出，两册一起带走更划算。',sp:['上下册全套','适合考研复习','可拆售议价']});
+add('book','sale','《外科学》第10版 上下册','📚',1,58,{op:102,s:SELLERS[7],d:'学长保研出清，书况很好，附赠手术学实习小结。'});
+add('book','sale','医学英语词汇突破 5500','📓',2,15,{op:28,s:SELLERS[6],d:'词根词缀记忆法，考六级和阅读文献都好用。'});
+add('book','sale','考研西综全程讲义套装','🗂️',7,120,{op:298,s:SELLERS[8],tm:260,vw:203,d:'全套六本讲义+真题解析，重点在旁页，跟一遍全程够用，上岸学长良心出。',sp:['讲义×6 + 真题×2','含手写补充笔记','自提优先']});
+add('elec','sale','AirPods Pro 2 · 国行在保','🎧',7,899,{op:1399,cd:'95新',s:SELLERS[0],tm:8,vw:312,d:'无磕碰无划痕，耳塞刚换新，降噪通透一切正常，盒子发票都在，可当面验机。',sp:['国行 · 在保至明年3月','盒子/发票/备用耳塞齐','支持当面验机 + 序列号查询']});
+add('elec','sale','iPad 9 代 64G WiFi版','📱',7,1580,{op:1999,cd:'九成新',s:SELLERS[4],tm:26,vw:267,d:'网课看文献神器，一直贴膜带壳使用，屏幕完美，电池效率92%。',sp:['电池效率 92%','送壳 + 钢化膜','可当面检测']});
+add('elec','sale','Kindle Paperwhite 5','📖',5,450,{op:799,cd:'95新',s:SELLERS[2],d:'屏幕无划痕，已装大量医学电子书资源。',sp:['8G · 防水','附磁吸保护套','内含文献阅读教程']});
+add('elec','sale','小米手环 8 · 黑色','⌚',5,129,{op:199,s:SELLERS[5],d:'军训后闲置，功能一切正常，送两条备用腕带。'});
+add('elec','sale','罗技 K380 蓝牙键盘','⌨️',7,119,{op:199,cd:'95新',s:SELLERS[6],d:'写文献记录神器，可连三台设备一键切换，键程手感很好。',sp:['三设备切换','白色 · 已彻底清洁','送同色鼠标垫']});
+add('elec','sale','Apple Pencil 一代','✏️',7,399,{op:749,s:SELLERS[1],d:'配合iPad做笔记用了半年，笔尖磨损正常，写字画画依旧精准。',sp:['兼容iPad 9','送备用笔尖×2']});
+add('elec','sale','充电宝 2万毫安 22.5W','🔋',1,39,{op:79,s:SELLERS[7],d:'实习备用，带过几次就闲置了，快充很稳。'});
+add('elec','sale','蓝牙闹钟音箱 · 白色','🔊',5,59,{op:109,s:SELLERS[3],d:'夜灯+闹钟+音箱三合一，音质出乎意料，搬家出。'});
+add('elec','sale','数码显微目镜（接手机）','🔬',2,88,{op:149,s:SELLERS[8],d:'接在显微镜目镜上用手机拍切片，组织学拍照作业神器。',sp:['适配主流目镜口径','组织学/病理切片神器','附使用教程']});
+add('elec','sale','考试专用科学计算器','🧮',1,35,{op:62,s:SELLERS[6],d:'全校统考允许的型号，功能键完好，送保护壳。'});
+add('rent','rent','佳能 M50 微单相机套机','📷',4,45,{cd:'准新',dep:800,s:SELLERS[9],tm:3,vw:198,d:'毕业旅行/社团活动租相机就它！套机含15-45镜头，成色很好，附32G卡和备用电池，手把手教基础参数。',sp:['含15-45mm镜头','32G卡+双电池','短租3-7天 · 押金可退']});
+add('rent','rent','面试正装套装（男/女款）','🕴️',12,25,{cd:'准新',dep:200,s:SELLERS[7],tm:6,vw:176,d:'秋招春招面试季必备！男女款各一套，高温熨烫后交付，含衬衫+西裤/裙+外套。',sp:['男女款 S-XXL','交付前高温熨烫','考试周连租优惠']});
+add('rent','rent','捷安特通勤单车','🚲',5,8,{dep:150,s:SELLERS[2],tm:9,vw:121,d:'宿舍到教学楼神器，刹车链条刚保养过，可日租也可整月包租更划算。',sp:['月租120元更划算','含车锁','车况定期保养']});
+add('rent','rent','见习白大褂（短/长款）','🥼',11,5,{cd:'全新',dep:50,s:SELLERS[3],tm:14,vw:231,d:'进医院见习必备，全新洗涤消毒后交付，短款长款均有，M-XXL 码全。',sp:['已洗涤消毒','M-XXL 码全','长租一周仅需25']});
+add('rent','rent','41寸民谣吉他 · 送拨片','🎸',2,12,{dep:300,s:SELLERS[5],d:'社团晚会练习租它，送变调夹和拨片，指板手感顺滑，新手友好。',sp:['送拨片+变调夹','附新手入门谱','含琴包']});
+add('rent','rent','露营天幕 + 桌椅套装','⛺',8,30,{dep:300,s:SELLERS[1],d:'周末郊区露营全套配齐：天幕、折叠桌、4把椅、串灯，一提就走。',sp:['4人配置全','含氛围串灯','周末租两天送半天']});
+add('rent','rent','领夹麦克风 · 直播网课','🎙️',3,15,{dep:200,s:SELLERS[6],d:'拍Vlog/上网课录音清晰，一拖二双麦，兼容手机电脑。'});
+add('rent','rent','毕业学士服拍照套餐','🎓',6,20,{dep:200,s:SELLERS[8],tm:35,vw:289,d:'毕业季拍照租学士服，含帽穗，男女码全，可配抛帽道具。',sp:['码全 M-XXL','含帽穗+道具','组队3套以上9折']});
+add('rent','rent','Switch 游戏机 + 2盒游戏','🎮',7,35,{dep:500,s:SELLERS[4],d:'宿舍聚会神器！含健身环和马车8，HD震动一切正常，附两个Pro手柄。',sp:['含马车8+健身环','底座+双握把','周末连租优惠']});
+add('rent','rent','考试周静音耳塞+眼罩套装','😴',5,3,{cd:'准新',dep:10,s:SELLERS[0],tm:48,vw:154,d:'期末期间图书馆/宿舍秒睡套餐，降噪耳塞+遮光眼罩，考完归还即可。',sp:['循环消毒','附收纳盒','支持考试周长租']});
+add('note','sale','系统解剖学 · 手绘笔记全套','📝',2,18,{cd:'电子+纸质',s:SELLERS[8],tm:5,vw:412,d:'学长手绘解剖图谱128页，高清扫描PDF秒发，也可代打印装订面交，期末抢救首选。',sp:['128页高清PDF','可代打印装订 +6元','付款秒发网盘']});
+add('note','sale','生理学期末真题 2020-2024','📄',5,12,{cd:'电子版',s:SELLERS[0],tm:11,vw:356,d:'近五年期末原题+答案解析，覆盖90%考点，附老师划的重点章节整理。',sp:['5年真题+解析','附重点章节表','网盘秒发']});
+add('note','sale','生物化学思维导图合集','🧠',3,10,{cd:'电子版',s:SELLERS[2],d:'三大代谢一张图理清，共22张A3思维导图，直接打印贴墙上背。',sp:['22张A3导图','PDF/PNG双格式']});
+add('note','sale','病理学重点图谱 · 打印版','🗂️',9,15,{cd:'纸质',s:SELLERS[4],d:'病变图谱+鉴别要点，胶装打印好，直接背诵版。'});
+add('note','sale','考研西综 · 傲视天鹰笔记','📚',7,45,{cd:'九成新',s:SELLERS[8],d:'上岸学长全套西综笔记，重点标记完整。',sp:['全套四册','含记忆口诀标注']});
+add('note','sale','医学影像读片资料包','🩻',9,22,{cd:'电子版',s:SELLERS[4],d:'X光/CT/MRI 典型病例读片 300 例，按系统分类，见习前刷一遍底气十足。'});
+add('note','sale','执业医师技能真题手册','📕',1,20,{cd:'纸质',s:SELLERS[7],d:'技能考试流程+评分标准+高频真题，体格检查部分有易错点批注。'});
+add('note','sale','系解 3D 解剖图谱会员共享','🦴',2,8,{cd:'虚拟',s:SELLERS[1],d:'3D解剖App会员共享账号，旋转观察每一块骨骼肌肉，比图谱直观一百倍。'});
+add('note','sale','英语四六级真题 + 网课','🎧',7,9,{cd:'电子版',s:SELLERS[6],d:'近十年真题PDF+听力音频+阅读技巧网课，一站式过级套餐。'});
+add('note','sale','局部解剖学实操录像','🎬',3,14,{cd:'电子版',s:SELLERS[9],d:'局解操作全程录像，考前复习操作步骤，实习前必看。'});
+add('life','sale','护眼夹式小台灯','💡',5,25,{op:49,s:SELLERS[3],tm:9,d:'三档色温无频闪，夹床头夹桌边都行，熄灯后学习党标配。',sp:['三档色温','USB供电']});
+add('life','sale','手持挂烫机','👗',5,45,{op:89,cd:'95新',s:SELLERS[1],d:'面试熨衬衫必备，蒸汽量大，预热30秒，用过三次几乎全新。'});
+add('life','sale','小米保温杯 500ml','🥤',1,29,{op:59,s:SELLERS[5],d:'保温12小时实测还在，杯身无划痕，自习室带水神器。'});
+add('life','sale','桌面三层收纳架','🗄️',8,20,{op:42,s:SELLERS[6],d:'化妆品文具都装得下，桌面瞬间清爽，拆装方便。'});
+add('life','sale','床上折叠小桌板','🛏️',8,28,{op:55,s:SELLERS[6],d:'床上写作业看剧标配，带杯槽平板槽，可折叠收纳。'});
+add('life','sale','迷你加湿器','💨',5,38,{op:75,s:SELLERS[0],d:'秋冬宿舍干燥救星，大雾量静音，带氛围灯。'});
+add('life','sale','落地全身镜','🪞',5,40,{op:89,s:SELLERS[8],d:'毕业出，镜面无划痕，宿舍/出租屋都合适，自提优先。'});
+add('life','sale','USB静音小风扇','🌀',9,33,{op:65,s:SELLERS[3],d:'宿舍上床下桌神器，三档风速声音很小，夜灯模式加分。'});
+add('plant','sale','向日葵毕业花束 · 拍照道具','🌻',13,12,{cd:'准新',s:SELLERS[3],tm:6,vw:167,d:'上周毕业照用的花束，拍完即转，花况依然很好，牛皮纸包装，学士服拍照绝配。',sp:['含牛皮纸包装','学士服拍照绝配','当天面交自取']});
+add('plant','sale','绿萝盆栽 · 净化空气','🪴',5,8,{op:15,s:SELLERS[2],d:'宿舍桌面养了一学期，藤蔓垂下来很漂亮，搬家带不走，附赠小花盆。',sp:['附陶瓷花盆','好养活','5号楼自提']});
+add('plant','sale','多肉植物套装 ×5盆','🌵',5,15,{op:29,s:SELLERS[6],d:'入坑一时爽，出坑打包价，五盆一起带走，含多肉营养土一包。',sp:['五盆组合','送营养土','状态图实拍']});
+add('plant','sale','龟背竹 · 宿舍大型绿植','🌱',5,25,{op:49,s:SELLERS[8],d:'ins风大型绿植，高度约60cm，宿舍角落颜值担当，毕业转让。',sp:['高约60cm','含塑料盆','自提优先']});
+add('plant','sale','玫瑰香薰干花礼盒','🌹',13,18,{op:35,cd:'全新',s:SELLERS[1],d:'收到两盒重复了，全新未拆，干花+香薰组合，送人或自留都很合适。',sp:['全新未拆封','附礼盒袋','当面验货']});
+add('plant','sale','郁金香小夜灯','🌷',5,16,{op:32,cd:'95新',s:SELLERS[3],d:'奶油风郁金香小夜灯，三档调光，宿舍氛围感神器，用了两个月。',sp:['三档调光','USB充电','含原盒']});
+add('plant','sale','樱花季香薰蜡烛','🌸',13,14,{cd:'全新',s:SELLERS[5],d:'闺蜜送的生日礼物，香味不适合我，全新未拆，樱花味清甜不腻。',sp:['全新未拆','燃烧约20小时','可当面验货']});
+add('food','sale','三只松鼠零食大礼包','🎁',8,35,{op:69,cd:'全新',s:SELLERS[5],tm:7,vw:112,d:'中秋收了两盒，一盒未拆原封出，8袋装齐全。',sp:['8袋混合装','未拆封','可当面拆验']});
+add('food','sale','冻干黑咖啡 50条装','☕',4,28,{op:55,cd:'全新',s:SELLERS[2],d:'期末周续命神器，美式无糖，一次一条带去图书馆超方便。'});
+add('food','sale','自热小火锅 ×3 盒','🍲',4,24,{op:48,cd:'全新',s:SELLERS[7],d:'囤货太多，麻辣/番茄/酸菜各一，宿舍加个热水就能吃。'});
+add('food','sale','好欢螺螺蛳粉 ×5','🍜',4,26,{op:50,cd:'全新',s:SELLERS[6],d:'囤了十包吃不完，出五包，加腐竹花生加倍快乐。'});
+add('food','sale','每日坚果 30包礼盒','🥜',8,45,{op:89,cd:'全新',s:SELLERS[1],d:'年货礼盒吃不完，独立小包锁鲜。'});
+add('food','sale','进口巧克力礼盒','🍫',10,52,{op:99,cd:'全新',s:SELLERS[8],d:'节日礼盒转出，24颗混合口味，送人自留都有面儿。'});
+add('beauty','sale','理肤泉 B5 修复霜 40ml','🧴',6,65,{op:109,cd:'全新',s:SELLERS[3],tm:6,vw:134,d:'双十一囤多了，全新未拆，刷酸后修复口碑款，假一赔十。',sp:['40ml 正装','全新未拆封','支持扫码验真']});
+add('beauty','sale','薇诺娜清透防晒 SPF50','☀️',6,78,{op:128,cd:'95新',s:SELLERS[0],d:'敏感肌友好，用了一个月发现不适合自己肤质，余量95%。'});
+add('beauty','sale','雅漾舒护喷雾 300ml','💦',5,55,{op:98,s:SELLERS[1],d:'换季泛红急救用，余量约九成。'});
+add('beauty','sale','花西子同心锁口红 · 全新','💄',10,89,{op:169,cd:'全新',s:SELLERS[5],tm:70,vw:112,d:'收到的礼物色号不合适，M211未拆封，壳子超精致适合送人。',sp:['M211 未拆','礼盒级外壳','支持验货']});
+add('beauty','sale','玉泽皮肤屏障修复乳','🧴',6,68,{op:118,s:SELLERS[4],d:'刷酸期保湿屏障神器，皮肤科口碑款，余量90%。'});
+add('beauty','sale','高速负离子吹风机','💨',5,99,{op:219,s:SELLERS[2],d:'宿舍大功率神器，负离子顺发不毛躁，宿舍限电可用。'});
+add('sport','sale','尤尼克斯羽毛球拍 · 单拍','🏸',9,160,{op:299,cd:'95新',s:SELLERS[2],tm:10,vw:132,d:'校队退坑出，拍框无磕碰，新穿线24磅，附拍套和手胶。',sp:['4U进攻型','新穿线24磅','附拍套手胶']});
+add('sport','sale','加厚防滑瑜伽垫','🧘',2,30,{op:59,s:SELLERS[3],d:'体考/宿舍跟练都合适，10mm加厚膝盖不疼，已清洁卷好。'});
+add('sport','sale','斯伯丁篮球 7号','🏀',8,75,{op:139,s:SELLERS[1],d:'室内外通用，气密性好，就打了两个月，附球袋气针。'});
+add('sport','sale','智能计数跳绳','🪢',9,15,{op:29,s:SELLERS[3],d:'体测跳绳神器，自动计数连手机App，钢丝绳可调节。'});
+add('sport','sale','哑铃 5kg ×2（包胶）','🏋️',5,50,{op:99,s:SELLERS[7],d:'宿舍健身入门，包胶不吵到楼下，可单只出。'});
+add('sport','sale','乒乓球拍 双拍套装','🏓',7,45,{op:89,s:SELLERS[5],d:'两只拍+三个球+收纳包，宿舍楼下打起来。'});
+add('wear','sale','北面双肩包 · 黑色 25L','🎒',7,180,{op:399,cd:'95新',s:SELLERS[0],tm:13,vw:187,d:'见习装书装电脑都够，背负系统舒服，无瑕疵，支持验货。',sp:['25L 大容量','15.6寸电脑仓','五金无氧化']});
+add('wear','sale','通勤白衬衫 · 修身版','👔',7,35,{op:69,s:SELLERS[7],d:'见习/面试标配，M码合身，已高温熨烫消毒。'});
+add('wear','sale','耐克跑鞋 42码','👟',1,199,{op:499,s:SELLERS[2],d:'气垫脚感很好，鞋底磨损很小，42码买大了，附原鞋盒。'});
+add('wear','sale','中长款羽绒服 90白鸭绒','🧥',3,150,{op:399,s:SELLERS[8],d:'去年冬天穿过十次不到，充绒量足，M码，已干洗。'});
+add('wear','sale','灰色连帽卫衣 L码','🧥',2,55,{op:109,s:SELLERS[9],d:'重磅纯棉不起球，oversize版型，情侣款可再出一件M码。'});
+add('wear','sale','卡西欧小方块手表','⌚',7,260,{op:499,cd:'95新',s:SELLERS[1],d:'经典款，走时精准，附原盒说明书。'});
+const catName=id=>CATS.find(c=>c.id===id).n;
+/* 统一价格渲染：现价 + 一个划线原价（有 op 才出现） */
+const priceHTML=i=>i.m==='rent'?`¥${i.p}<i>/天</i>`:`¥${i.p}${i.op?`<s>¥${i.op}</s>`:''}`;
+const BG=g=>`linear-gradient(150deg,hsla(${g*29},34%,54%,.6),hsla(${g*29+26},30%,66%,.6) 55%,hsla(${g*29+10},26%,46%,.6)),linear-gradient(#fff,#fff)`;
+
+/* ============ 工具 ============ */
+const $=s=>document.querySelector(s);
+let MODE='sale',SORT='hot',CFILTER='all',CURCAT=null,CURITEM=null,CURTAB=0,meTab=0;
+const fav=new Set();let hist=['解剖','相机','正装','花'];
+let toastT;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1800);};
+function showTab(n){const old=CURTAB;CURTAB=n;
+document.querySelectorAll('.view').forEach(v=>v.classList.remove('on','anim-r','anim-l','anim-u'));
+const v=document.getElementById('v'+n);
+v.classList.add('on',n===old?'anim-u':(n>old?'anim-r':'anim-l'));
+document.querySelectorAll('#tabbar b').forEach(b=>b.classList.toggle('on',+b.dataset.v===n));}
+function openSub(id){$('#'+id).classList.add('open');}
+function closeSub(id){$('#'+id).classList.remove('open');}
+
+/* ============ 首页 ============ */
+const BNS=[
+{bg:BG(6),tag:'毕业季',h:'学长学姐清仓专场',p:'教材 · 电器 · 好物 3 折起',e:'🧳'},
+{bg:BG(3),tag:'考试周',h:'真题笔记限时免单',p:'期末抢救资料 5 元起',e:'⚡'},
+{bg:BG(1),tag:'租借',h:'相机 · 正装 · 吉他',p:'短期租借 押金全退',e:'📷'}];
+let bnIdx=0,bnTimer;
+function buildBanner(){
+$('#bntrack').innerHTML=BNS.map(b=>`<div class="bn" style="background:${b.bg}" data-act="banner"><span class="btag">${b.tag}</span><h3>${b.h}</h3><p>${b.p}</p><span class="bem">${b.e}</span></div>`).join('');
+$('#bdots').innerHTML=BNS.map((_,i)=>`<i class="${i===0?'on':''}" data-act="bdot" data-v="${i}"></i>`).join('');
+bnTimer=setInterval(()=>goBn(bnIdx+1),4200);}
+function goBn(i){bnIdx=(i+BNS.length)%BNS.length;const w=$('#bntrack');w.scrollTo({left:w.clientWidth*bnIdx,behavior:'smooth'});
+document.querySelectorAll('#bdots i').forEach((d,k)=>d.classList.toggle('on',k===bnIdx));}
+function buildGrid2(){
+const four=['book','elec','rent','note'];
+const subs=['期末救急 · 学长笔记','官方验机 · 当面检测','相机正装 · 日租','真题笔记 · 秒发'];
+$('#grid2').innerHTML=four.map((id,k)=>{const c=CATS.find(x=>x.id===id);
+return `<div class="g2t" style="background:${BG([1,7,2,4][k])}" data-act="open-cat" data-v="${id}"><h4>${c.n}</h4><p>${subs[k]}</p><span class="em">${c.i}</span></div>`;}).join('');
+$('#catrow').innerHTML=CATS.slice(4).map(c=>`<div class="cit" data-act="open-cat" data-v="${c.id}"><div class="ci">${c.i}</div><span>${c.n}</span></div>`).join('')+
+`<div class="cit" data-act="allcat"><div class="ci">☰</div><span>全部分类</span></div>`;}
+const DISC=[
+{t:'猜你喜欢',s:'系解手绘笔记 · 412人浏览',e:'💗',g:3},
+{t:'毕业专区',s:'学士服 / 花束 / 清仓',e:'🎓',g:1},
+{t:'考试周急救',s:'五年真题 + 答案解析',e:'⚡',g:6}];
+function buildDisc(){$('#disc').innerHTML=DISC.map((d,k)=>`<div class="dcard" style="background:${BG(d.g)}" data-act="open-detail" data-v="${[1,49,32][k]}"><span class="em">${d.e}</span><div class="dtx"><b>${d.t}</b><span>${d.s}</span></div></div>`).join('');}
+function cardHTML(i){return `<div class="wcard" data-act="open-detail" data-v="${i._id}">
+<div class="wthumb" style="background:${BG(i.g)}"><span class="em">${i.e}</span><span class="wtag ${i.m}">${i.m==='rent'?'可租':'出售'}</span></div>
+<div class="wbody"><h4>${i.t}</h4><div class="wrow"><span class="price">${priceHTML(i)}</span></div>
+<div class="wmeta"><span class="vf">✓实</span>${i.s.replace(' ·','·')} · 👁${i.vw}</div></div></div>`;}
+function renderFeed(){let l=ITEMS.filter(i=>i.m===MODE);
+if(SORT==='new')l=[...l].sort((a,b)=>a.tm-b.tm);else if(SORT==='cheap')l=[...l].sort((a,b)=>a.p-b.p);else l=[...l].sort((a,b)=>b.vw-a.vw);
+$('#feed').innerHTML=l.slice(0,16).map(cardHTML).join('');}
+
+/* ============ 上新 ============ */
+const LS=600;let left=LS;
+function buildLive(anim){const pool=[...ITEMS].sort(()=>Math.random()-.5);
+const gs=[{n:'刚刚上架',a:'1-3分钟前',l:pool.slice(0,5)},{n:'10分钟前',a:'6-15分钟前',l:pool.slice(5,11)},{n:'半小时前',a:'20-58分钟前',l:pool.slice(11,18)}];
+$('#liveList').innerHTML=gs.map(g=>`<div class="glab"><i></i>${g.n}</div>${g.l.map(i=>`
+<div class="lrow ${anim?'fresh':''}" data-act="open-detail" data-v="${i._id}">
+<div class="lth" style="background:${BG(i.g)}"><span>${i.e}</span></div>
+<div style="flex:1;min-width:0"><h4>${i.t}</h4><div class="lm"><b>${i.m==='rent'?'可租':'出售'}</b><span>${i.s.replace(' ·','·')}</span></div></div>
+<div class="lp"><span class="price">${priceHTML(i)}</span><div class="tm">${g.a}</div></div></div>`).join('')}`).join('')+
+`<div class="endf">下拉或点击刷新 · 同窗集市持续上新</div>`;
+if(anim)toast('已为你刷新最新上新 ✨');}
+function tickLive(){left--;if(left<=0){left=LS;buildLive(true);}
+$('#ringNum').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');
+$('#ringBar').style.strokeDashoffset=138.2*(1-left/LS);}
+
+/* ============ 我的 ============ */
+const MYPOST=[
+{t:'《病理学》第9版',e:'📕',g:9,st:['st0','在售'],p:'¥24 · 12人想要'},
+{t:'系解手绘笔记',e:'📝',g:2,st:['st0','在售'],p:'¥18 · 31人想要'},
+{t:'绿萝盆栽',e:'🪴',g:5,st:['st0','在售'],p:'¥8'},
+{t:'北面双肩包',e:'🎒',g:7,st:['st0','在售'],p:'¥180'},
+{t:'面试正装套装',e:'🕴️',g:12,st:['st3','审核中'],p:'¥25/天'},
+{t:'佳能 M50 相机',e:'📷',g:4,st:['st1','租借中'],p:'明日归还'},
+{t:'理肤泉B5修复霜',e:'🧴',g:6,st:['st2','已售'],p:'¥65 · 3天前'},
+{t:'考研西综讲义',e:'📚',g:7,st:['st2','已售'],p:'¥120'},
+{t:'尤尼克斯球拍',e:'🏸',g:9,st:['st2','已售'],p:'¥160'}];
+const ST_ORDER=['st0','st1','st3','st2'];
+const ST_NAME={st0:'在售中',st1:'租借中',st3:'审核中',st2:'已售出'};
+function myCard(m,showSt){return `<div class="mg" data-act="${m.id?'open-detail':'setting'}" data-v="${m.id||'交易窗商品'}">
+<div class="cov" style="background:${BG(m.g)}"><span>${m.e}</span></div>
+<h5>${m.t}</h5><p>${showSt?`<span class="st ${m.st[0]}">${m.st[1]}</span> `:''}${m.p}</p></div>`;}
+function renderMeGrid(){let html='';
+if(meTab===0){
+ST_ORDER.forEach(st=>{const arr=MYPOST.filter(m=>m.st[0]===st);if(!arr.length)return;
+html+=`<div class="mglab"><span class="dotb ${st}"></span>${ST_NAME[st]}<b>${arr.length} 件</b></div>
+<div class="mgrid2">${arr.map(m=>myCard(m,true)).join('')}</div>`;});
+}else{
+/* 收藏/足迹：三行格子 · 向左滑动；价格保留完整 HTML（含划线原价） */
+const ids=meTab===1?[1,11,12,26,32,52,56,62,66]:[2,14,23,27,33,43,47,53,57];
+const arr=ids.map(id=>ITEMS.find(x=>x._id===id)).filter(Boolean)
+.map(i=>({t:i.t,e:i.e,g:i.g,p:priceHTML(i),id:i._id}));
+html=`<div class="mglab"><span class="dotb ${meTab===1?'st3':'st0'}"></span>${meTab===1?'我收藏的':'最近看过'}<b>${arr.length} 件 · 左滑查看更多 ›</b></div>
+<div class="mswipe">${arr.map(m=>myCard(m,false)).join('')}</div>`;}
+$('#mgrid').innerHTML=html;}
+
+/* ============ 分类 ============ */
+function openCat(id){CURCAT=id;CFILTER='all';
+const c=CATS.find(x=>x.id===id);
+$('#catTitle').textContent=c.i+' '+c.n;
+document.querySelectorAll('#catChips .chip').forEach(ch=>ch.classList.toggle('on',ch.dataset.v==='all'));
+renderCatList();openSub('subCat');}
+function renderCatList(){let l=ITEMS.filter(i=>i.cat===CURCAT);
+if(CFILTER==='sale')l=l.filter(i=>i.m==='sale');
+if(CFILTER==='rent')l=l.filter(i=>i.m==='rent');
+if(CFILTER==='likeNew')l=l.filter(i=>/九成|95|全新|准新/.test(i.cd));
+$('#catList').innerHTML=l.map(i=>`<div class="crow3" data-act="open-detail" data-v="${i._id}">
+<div class="cth" style="background:${BG(i.g)}"><span>${i.e}</span></div>
+<div style="flex:1;min-width:0"><h4>${i.t}</h4><div class="cm"><span class="mtag ${i.m==='rent'?'hi':''}">${i.m==='rent'?'可租借':'闲置出售'}</span><span class="mtag">${i.cd}</span><span>${i.s.split('· ')[1]}</span></div></div>
+<div class="pr"><span class="price">${priceHTML(i)}</span><div class="who">✓${i.s.split(' ·')[0]}</div></div></div>`).join('');}
+
+/* ============ 详情 ============ */
+function openDetail(id){const i=ITEMS.find(x=>x._id===+id);if(!i)return;CURITEM=i;
+$('#dHero').style.background=BG(i.g);
+$('#dEm').textContent=i.e;
+const tg=$('#dTag');tg.className='wtag '+i.m;tg.textContent=i.m==='rent'?'短期租借':'闲置出售';
+$('#dFav').classList.toggle('on',fav.has(i._id));
+/* pricebar 只用 priceHTML 一次，不再重复划线原价 */
+$('#dBody').innerHTML=`
+<div class="pricebar"><span class="price">${priceHTML(i)}</span>${i.dep?`<span class="dep">押金 ¥${i.dep} · 归还即退</span>`:''}<span class="dep" style="margin-left:auto">${i.cd}</span></div>
+<div class="dtit">${i.t}</div>
+<div class="dmeta"><span>${i.tm<60?i.tm+'分钟前':Math.floor(i.tm/60)+'小时前'}上架</span><span>👁 ${i.vw}</span><span><b>✓ 实名已认证</b></span></div>
+<div class="dcd"><h5>商品描述</h5><p>${i.d||i.cd+'自用好物，校内面交优先，支持当面验货，可小刀。'}</p>
+<ul class="specs">${i.sp.map(s=>`<li>${s}</li>`).join('')}</ul></div>
+<div class="dcd seller">
+<div class="sa">${i.s[0]}</div>
+<div style="flex:1"><h4>${i.s.split(' ·')[0]} <span class="vf">✓ 实名</span></h4><p>${i.s.split('· ')[1]} · 信用分 <b>${i.sc}</b> · 回复很快</p></div>
+<button class="chatb" data-act="chat">聊一聊</button></div>
+<div class="dcd safety"><div class="sic">🛡️</div><div><b>同窗担保交易</b><br>仅限本校学号实名用户 · 建议图书馆/教学楼大厅面交 · 租品押金平台托管，归还即退。</div></div>`;
+$('#dBar').innerHTML=`
+<button class="dico ${fav.has(i._id)?'fav':''}" data-act="dfav" id="dicoFav">${ic('heart',19)}<span>收藏</span></button>
+<button class="dico" data-act="chat">${ic('help',19)}<span>聊天</span></button>
+<button class="mainbtn ${i.m==='rent'?'rent':'buy'}" data-act="order">${i.m==='rent'?'立即租借':'立即购买'}</button>`;
+$('#dScroll').scrollTop=0;openSub('subDetail');}
+
+/* ============ Sheet 系统 ============ */
+function openSheet(html){$('#sheetBody').innerHTML=html;$('#mask').classList.add('show');$('#sheet').classList.add('open');}
+const closeSheet=()=>{$('#mask').classList.remove('show');$('#sheet').classList.remove('open');};
+let days=3,payv=0;
+function orderSheet(){const i=CURITEM;days=3;payv=0;
+openSheet(`<h3>${i.m==='rent'?'确认租借':'确认购买'}</h3>
+<div class="ssum"><div class="sth" style="background:${BG(i.g)}"><span>${i.e}</span></div>
+<div style="flex:1;min-width:0"><h4>${i.t}</h4><p>${i.s} · ${i.cd}</p></div><span class="price" style="font-size:15px">${priceHTML(i)}</span></div>
+${i.m==='rent'?`<div class="stepper"><div class="lab">租借天数<i>押金 ¥${i.dep} · 归还后原路退回</i></div>
+<div class="stctl"><button data-act="step" data-v="-">−</button><b id="dayN">3</b><button data-act="step" data-v="+">＋</button></div></div>`
+:`<div class="stepper"><div class="lab">交易方式<i>同窗担保 · 校内闭环</i></div></div>
+<div class="payrow"><button class="chip on" data-act="pay" data-v="0">🤝 校内面交</button><button class="chip" data-act="pay" data-v="1">📦 宿舍楼下代取</button></div>`}
+<div class="tot"><span>商品金额</span><span id="tAmt">¥${i.m==='rent'?i.p*3:i.p}</span></div>
+${i.m==='rent'?`<div class="tot"><span>押金（可退）</span><span>¥${i.dep}</span></div>`:`<div class="tot"><span>担保服务费</span><span style="color:var(--grn2)">免手续费</span></div>`}
+<div class="tot big"><span>合计</span><b id="tSum">¥${i.m==='rent'?i.p*3+i.dep:i.p}</b></div>
+<button class="confirm" data-act="confirm">${i.m==='rent'?'确认租借 · 预约面交':'确认下单'}</button>`);}
+
+/* ============ 钱包 ============ */
+const PENDING={done:false};
+const WTRACE=[
+{icon:'📕',t:'购入 · 《病理学》第9版',tm:'昨天 21:15',amt:'-24.00',dir:'minus',tag:'担保中 · 明天 14:00 面交',live:true,
+steps:[['done','✓','下单成功','昨天 21:15 · 同窗担保交易'],
+['done','✓','付款 ¥24.00','平台托管中 · 面交确认后放款'],
+['cur','3','待面交','明天 14:00 · 南区5号楼大厅 · 与温同学','当面验货后点「完成交易」放款'],
+['todo','4','完成交易','放款给卖家 · 双方互评 +信用分']]},
+{icon:'📗',t:'卖出 · 系解手绘笔记',tm:'今天 08:40',amt:'+18.00',dir:'plus',tag:'已到账',live:false,
+steps:[['done','✓','买家下单','今天 08:32 · 实名买家'],
+['done','✓','面交验货','图书馆3楼大厅 · 当面确认'],
+['done','✓','放款 ¥18.00','已到账 · 校园卡余额'],
+['done','★','互评完成','对方评价：排版超清晰！']]},
+{icon:'📷',t:'押金 · 佳能 M50 租借',tm:'周三 12:05',amt:'-800.00',dir:'minus',tag:'租借中 · 周日归还',live:false,
+steps:[['done','✓','下单并付押金','周三 12:05 · 押金平台托管'],
+['done','✓','已取机','当面验机 · 快门数 1.2w'],
+['cur','3','租借中','租期至周日 18:00','归还验货后押金原路退回'],
+['todo','4','押金退还','预计归还后 2 小时内到账']]},
+{icon:'🌷',t:'卖出 · 向日葵花束',tm:'6月28日',amt:'+12.00',dir:'plus',tag:'已到账',live:false,
+steps:[['done','✓','买家下单','6月28日 10:11 · 实名买家'],
+['done','✓','面交完成','南区5号楼大厅'],
+['done','✓','放款 ¥12.00','已到账 · 校园卡余额'],
+['done','★','互评完成','好评']]},
+];
+function traceSheet(i){const t=WTRACE[i];if(!t)return;
+openSheet(`<h3>交易跟踪</h3>
+<div class="ssum"><div class="sth" style="background:${BG(9)}"><span>${t.icon}</span></div>
+<div style="flex:1;min-width:0"><h4>${t.t}</h4><p>${t.tm} · ${t.tag}</p></div>
+<span class="wa ${t.dir}" style="font-size:15px">${t.amt}</span></div>
+<div class="steps">${t.steps.map((s,k)=>`
+<div class="step ${s[0]}"><div class="rail"><span class="dot">${s[1]}</span>${k<t.steps.length-1?'<span class="ln"></span>':''}</div>
+<div class="sb2"><h5>${s[2]}</h5><p>${s[3]}${s[4]?`<br>${s[4]}`:''}</p></div></div>`).join('')}</div>
+${t.live?`<div class="duo"><button data-act="chat">联系对方</button><button class="pri" data-act="done-order">完成交易</button></div>`
+:`<button class="mok" data-act="sheet-close">关闭</button>`}`);}
+function walletSheet(){openSheet(`<h3>我的钱包</h3>
+<div class="walcard"><span>校园卡余额</span><b>¥128.50</b><span>重小医 · 2023220xxx · 已实名</span></div>
+<div class="wlab">进行中 · ${PENDING.done?'0':'1'} 笔</div>
+${PENDING.done?`<p style="font-size:12px;color:var(--faint);padding:2px 2px 4px">暂无进行中交易，去逛逛集市吧～</p>`
+:`<div class="wnow" data-act="wtrace" data-v="0">
+<div class="wth">📕</div>
+<div style="flex:1;min-width:0"><h4>待面交 · 《病理学》第9版</h4><p>担保中 ¥24 · 明天 14:00 · 南区5号楼大厅</p></div>
+<span class="wc">›</span></div>`}
+<div class="wlab">收支明细 · 每笔可点开跟踪</div>
+<div class="wlist">${WTRACE.map((t,i)=>`
+<div class="wrow2" data-act="wtrace" data-v="${i}"><div class="wi">${t.icon}</div>
+<div style="flex:1;min-width:0"><h5>${t.t}</h5><p>${t.tm} · ${t.tag}</p></div>
+<span class="wa ${t.dir}">${t.amt}</span><span class="wc">›</span></div>`).join('')}</div>`);}
+function inviteSheet(){openSheet(`<h3>邀请同窗</h3>
+<div class="invcode"><p>你的专属邀请码</p><b>TCJT·MONET·520</b><p>邀请一位同窗实名注册，双方各得 ¥5 面交券</p></div>
+<div class="duo"><button data-act="copy-invite">复制邀请码</button><button class="pri" data-act="setting" data-v="分享海报">生成分享海报</button></div>`);}
+function chatSheet(){const s=CURITEM?CURITEM.s:'温同学 · 临床2021级';
+openSheet(`<div class="seller" style="margin-bottom:4px"><div class="sa">${s[0]}</div><div style="flex:1"><h4>${s.split(' ·')[0]}</h4><p>${s.split('· ')[1]} · 通常几分钟内回复</p></div></div>
+<div class="chatbox" id="chatbox">
+<div class="cmsg them">你好～东西还在的，随时可以面交 🙌</div>
+<div class="cmsg me">明天下午2点，南区5号楼大厅方便吗？</div>
+<div class="cmsg them">可以的，不见不散！到时候当面验货 😊</div>
+</div>
+<div class="cin"><input id="chatIn" placeholder="说点什么…"><button data-act="chat-send">发送</button></div>`);}
+const WALLS=[
+{id:'wp-mist',n:'晨雾紫',g:'linear-gradient(150deg,#d8cfe6,#b9a8d4 60%,#e6c9d9)'},
+{id:'wp-matcha',n:'抹茶园',g:'linear-gradient(150deg,#cdd9b8,#9db88a 60%,#e3d9a8)'},
+{id:'wp-dawn',n:'暖阳桃',g:'linear-gradient(150deg,#f2d4bc,#e8a87c 60%,#e2a0a0)'},
+{id:'wp-celadon',n:'青瓷',g:'linear-gradient(150deg,#c2d8d2,#8fb8ac 60%,#b3c9d6)'},
+{id:'wp-silver',n:'银色波纹',g:'linear-gradient(150deg,#dfe2e7,#aab4c0 55%,#cdd3da)'},
+{id:'wp-monet',n:'回到默认',g:'linear-gradient(150deg,#e9e4d8,#c9d8bd 50%,#c5b3d6)'}];
+function wallSheet(){openSheet(`<h3>主题壁纸</h3><p style="font-size:11.5px;color:var(--faint);margin-top:4px">桌面氛围与「首页 / 我的 / 上新 / 菜单」背景一同切换</p>
+<div class="wgrid">${WALLS.map(w=>`<div class="wop ${(document.body.className===w.id)||(w.id==='wp-monet'&&!document.body.className)?'on':''}" style="background:${w.g}" data-act="wpick" data-v="${w.id}"><span>${w.n}</span><span class="ck">✓</span></div>`).join('')}</div>`);}
+
+/* ============ 搜索 ============ */
+const HOT=[['毕业季教材','书',1],['解剖图谱','解剖',1],['单反相机','相机',1],['面试正装','正装',0],['向日葵花束','花',1],['考研西综','考研',0],['绿萝盆栽','绿萝',0],['白大褂','白大褂',0],['Switch游戏机','Switch',0],['香薰蜡烛','香薰',0]];
+function renderHist(){$('#histTags').innerHTML=hist.length?hist.map(k=>`<button class="chip" data-act="hist" data-v="${k}">${k}</button>`).join(''):'<span style="font-size:12px;color:var(--faint)">暂无搜索历史</span>';}
+function renderHot(){$('#hotList').innerHTML=HOT.map((h,i)=>`<div class="hrow ${i<3?'top':''}" data-act="hot" data-v="${h[1]}"><span class="no">${i+1}</span><span class="kw">${h[0]}${h[2]?'<span class="hf">热</span>':''}</span><span class="hv">${(HOT.length-i)*8731%9000+1000}人搜过</span></div>`).join('');}
+function runSearch(){const kw=$('#sInput').value.trim();
+if(!kw){$('#sDefault').style.display='block';$('#sResults').innerHTML='';return;}
+$('#sDefault').style.display='none';
+if(!hist.includes(kw)){hist.unshift(kw);hist=hist.slice(0,8);renderHist();}
+const l=ITEMS.filter(i=>(i.t+i.d+catName(i.cat)).includes(kw)).slice(0,12);
+$('#sResults').innerHTML=l.length?`<div class="scount">找到 <b>${l.length}</b> 件与「${kw}」相关的好物</div>
+<div class="catlist" style="margin:0 14px">${l.map(i=>`<div class="crow3" data-act="open-detail" data-v="${i._id}">
+<div class="cth" style="background:${BG(i.g)}"><span>${i.e}</span></div>
+<div style="flex:1;min-width:0"><h4>${i.t}</h4><div class="cm"><span class="mtag">${catName(i.cat)}</span><span class="mtag">${i.cd}</span></div></div>
+<div class="pr"><span class="price">${priceHTML(i)}</span></div></div>`).join('')}</div>`
+:`<div class="nores"><span class="ne">🔍</span>没有找到「${kw}」<br>试试「书」「花」「相机」</div>`;}
+
+/* ============ 发布 ============ */
+let pubCat='book',pubCond='九成新';
+function buildPub(){
+$('#pubCats').innerHTML=CATS.map(c=>`<button class="chip ${c.id===pubCat?'on':''}" data-act="cat-pick" data-v="${c.id}">${c.i} ${c.n}</button>`).join('');
+$('#pubCond').innerHTML=['全新','九成新','八成新','可租'].map(c=>`<button class="chip ${c===pubCond?'on':''}" data-act="cond-pick" data-v="${c}">${c}</button>`).join('');}
+
+/* ============ Modal ============ */
+function showModal(html){$('#modalBox').innerHTML=html;$('#modal').classList.add('show');}
+function verifyModal(){showModal(`<div class="mico">${ic('shield',26)}</div>
+<h3>已完成学号实名认证</h3><div class="msub">重小医 · 校内可信交易闭环</div>
+<ul class="mlist2">
+<li><span class="mk">1</span><span><b>仅限本校学生</b>：学号登录注册，校外人员无法进入，从源头杜绝诈骗与身份不可验。</span></li>
+<li><span class="mk">2</span><span><b>信息可追溯</b>：双方可查看真实院系 / 年级（第二临床 · 影像 · 2023级），出现问题可追责。</span></li>
+<li><span class="mk">3</span><span><b>可信 · 规范</b>：医学生团队打造，纠纷可申诉、平台介入担保。</span></li>
+</ul><button class="mok" data-act="close-modal">知道了</button>`);}
+function aboutModal(){showModal(`<div class="mico">🪟</div>
+<h3>同窗集市 v1.0</h3><div class="msub">校内可信闲置交易 · 本校试点中</div>
+<ul class="mlist2">
+<li><span class="mk">🌱</span><span><b>闭环跑通</b>：实名认证 → 可信交易 → 口碑沉淀。</span></li>
+<li><span class="mk">🚀</span><span><b>轻扩张计划</b>：跑通后复制到周边 3 所高校。</span></li>
+<li><span class="mk">♻️</span><span><b>可持续</b>：学长帮学弟，好物代代相传。</span></li>
+</ul><button class="mok" data-act="close-modal">和我们一起循环 ♻️</button>`);}
+
+/* ============ 事件 ============ */
+const STATES=['＋ 添加状态','📚 期末出书中…','♻️ 让闲置流转起来','🤝 今天有 2 单面交'];
+let stIdx=0;
+document.addEventListener('click',e=>{
+const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,v=el.dataset.v;
+switch(a){
+case 'tab':showTab(+v);break;
+case 'menu-open':$('#menu').classList.add('open');break;
+case 'menu-close':$('#menu').classList.remove('open');break;
+case 'nav':$('#menu').classList.remove('open');showTab(+v);break;
+case 'me-from-menu':$('#menu').classList.remove('open');showTab(2);break;
+case 'me-from-menu2':$('#menu').classList.remove('open');showTab(2);meTab=0;syncMeTabs();renderMeGrid();break;
+case 'open-settings':$('#menu').classList.remove('open');openSub('subSet');break;
+case 'publish':$('#menu').classList.remove('open');buildPub();openSub('subPub');break;
+case 'wallopen':$('#menu').classList.remove('open');wallSheet();break;
+/* 修复：先关闭全屏菜单，再打开搜索子页（否则搜索页在菜单下面打开，看起来没反应） */
+case 'search':$('#menu').classList.remove('open');openSub('subSearch');setTimeout(()=>$('#sInput').focus(),400);break;
+case 'search-go':runSearch();break;
+case 'hot':case 'hist':$('#sInput').value=v;runSearch();break;
+case 'clear-hist':hist=[];renderHist();toast('搜索历史已清空');break;
+case 'open-cat':openCat(v);break;
+case 'allcat':toast('全部分类 · 共 '+CATS.length+' 个类目');break;
+case 'open-detail':openDetail(v);break;
+case 'back':closeSub(el.dataset.p);break;
+case 'mode':MODE=v;document.querySelectorAll('#segMode button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));renderFeed();break;
+case 'sort':SORT=v;el.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderFeed();break;
+case 'banner':goBn(bnIdx+1);break;
+case 'bdot':goBn(+v);clearInterval(bnTimer);bnTimer=setInterval(()=>goBn(bnIdx+1),4200);break;
+case 'cfilter':CFILTER=v;el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');renderCatList();break;
+case 'refresh':left=LS;buildLive(true);break;
+case 'metab':meTab=+v;syncMeTabs();renderMeGrid();break;
+case 'mstate':stIdx=(stIdx+1)%STATES.length;$('#stateTx').textContent=STATES[stIdx];if(stIdx)toast('状态已更新');break;
+case 'wallet':walletSheet();break;
+case 'wtrace':traceSheet(+v);break;
+case 'invite':inviteSheet();break;
+case 'copy-invite':toast('邀请码已复制 📋');break;
+case 'help':toast('常见问题：面交安全 · 押金退还 · 纠纷申诉');break;
+case 'order-open':traceSheet(0);break;
+case 'mini-close':$('#mini').classList.add('gone');toast('已移除桌面提醒 · 「我的-钱包-进行中」随时可查');break;
+case 'done-order':{PENDING.done=true;WTRACE[0].live=false;WTRACE[0].tag='已完成 · 放款成功';
+const m=$('#mini');if(m)m.classList.add('gone');closeSheet();
+toast('交易完成！¥24 已放款 · 双方 +2 信用分 🎉');break;}
+case 'chat':chatSheet();break;
+case 'chat-send':{const inp=$('#chatIn');const t=inp.value.trim();if(!t)return;
+const box=$('#chatbox');box.insertAdjacentHTML('beforeend',`<div class="cmsg me">${t}</div>`);
+inp.value='';box.scrollTop=box.scrollHeight;
+setTimeout(()=>{box.insertAdjacentHTML('beforeend','<div class="cmsg them">收到！那明天见啦 😊📚</div>');box.scrollTop=box.scrollHeight;},1100);break;}
+case 'order':orderSheet();break;
+case 'step':{days=Math.min(30,Math.max(1,days+(v==='+'?1:-1)));const i=CURITEM;
+$('#dayN').textContent=days;$('#tAmt').textContent='¥'+i.p*days;$('#tSum').textContent='¥'+(i.p*days+i.dep);break;}
+case 'pay':payv=+v;el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');break;
+case 'confirm':closeSheet();toast(CURITEM.m==='rent'?'租借预约成功！等待对方确认 🤝':'下单成功！等待卖家确认 ✅');break;
+case 'sheet-close':closeSheet();break;
+case 'wpick':{document.body.className=v==='wp-monet'?'':v;wallSheet();toast('主题已切换 · '+WALLS.find(w=>w.id===v).n);break;}
+case 'cat-pick':pubCat=v;buildPub();break;
+case 'cond-pick':pubCond=v;buildPub();break;
+case 'pphoto':{el.style.borderStyle='solid';el.style.borderColor='var(--ink)';el.style.background=BG(5);el.innerHTML=`<span style="font-size:26px">${v}</span>`;toast('已添加实拍图 📷');break;}
+case 'pub-submit':{const t=$('#pubTitle').value.trim();
+if(!t){toast('先给宝贝写个标题吧 ✍️');return;}
+closeSub('subPub');toast('发布成功！已同步到上新动态 🎉');break;}
+case 'verify':verifyModal();break;
+case 'about':aboutModal();break;
+case 'close-modal':$('#modal').classList.remove('show');break;
+case 'setting':toast('「'+v+'」· 演示原型未开放');break;
+case 'logout':toast('演示原型：假装退出又登录回来了 😝');break;
+}});
+function syncMeTabs(){document.querySelectorAll('#mtabs b').forEach(b=>b.classList.toggle('on',+b.dataset.v===meTab));}
+$('#sInput').addEventListener('input',runSearch);
+$('#sInput').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSheet();$('#modal').classList.remove('show');$('#menu').classList.remove('open');}});
+
+/* ============ 初始化 ============ */
+buildBanner();buildGrid2();buildDisc();renderFeed();buildLive(false);
+renderHist();renderHot();renderMeGrid();buildPub();tickLive();setInterval(tickLive,1000);
+</script>
+</body>
+</html>
